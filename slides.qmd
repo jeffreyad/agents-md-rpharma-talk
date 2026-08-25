@@ -295,6 +295,70 @@ YAML is forward-positioned for when that lands. Good moment for audience
 Q&A about roadmap / contributing that piece upstream.
 :::
 
+# Beyond AGENTS.md: Agent Skills
+
+## Two different tools {.center}
+
+AGENTS.md isn't the only place agent-facing context now lives.
+
+| | `AGENTS.md` | `SKILL.md` |
+|---|---|---|
+| Scope | Whole repo — conventions, git usage, checks | One task or workflow |
+| Lives in | The repo it describes | Any project — installed as a package |
+| Activated | Always loaded as context | On demand, matched to the task |
+| Contains | Prose guidance | Workflow + references + scripts + benchmarks |
+
+::: {.notes}
+Framing note: this is a taxonomy slide, not a rivalry. AGENTS.md tells an
+agent how to behave in *this* repo, generally, all the time. SKILL.md
+packages *one* reusable capability — a CDISC domain derivation, a trial
+simulation workflow, whatever — that gets pulled into whichever repo needs
+it, and only loads when the task calls for it.
+:::
+
+## Live example: `{admiral}` skills in the wild
+
+[RConsortium/pharma-skills](https://github.com/RConsortium/pharma-skills) —
+part of the R Consortium Submissions Working Group's **Pilot 7** — publishes
+installable skills, including two built on `{admiral}`:
+
+::: {.incremental}
+- **admiral-adsl** — derive ADSL from SDTM domains
+- **admiral-bds** — derive BDS findings datasets (ADVS, ADLB)
+:::
+
+```yaml
+name: admiral-adsl
+description: >
+  Derives an ADaM Subject-Level Analysis Dataset (ADSL) using the {admiral}
+  R package and pharmaverse ecosystem. Use when a user needs to create ADSL
+  from SDTM domains...
+metadata:
+  pharmaverse: "true"
+  parent: admiral
+compatibility: >
+  Requires R with admiral, dplyr, lubridate, and pharmaversesdtm installed.
+```
+
+Installed with one command:
+`npx skills add RConsortium/pharma-skills --skill admiral-adsl`
+
+## Complementary, not competing
+
+::: {.callout}
+`AGENTS.md` teaches an agent how `{admiral}` **as a whole** expects code to
+be written. A skill like `admiral-adsl` teaches it how to **execute one
+derivation**, step by step, with QC-ready, traceable output.
+:::
+
+Skills carry their own governance: Design → Development → Evaluation →
+Release, benchmarked across multiple LLMs before publication — the same
+rigor Pilot 7 applies to its synthetic-data and trial-simulation work.
+
+Same underlying question as the rest of this talk: **how do we transmit
+regulatory-grade domain knowledge to something that didn't grow up in this
+codebase?**
+
 ## What's still evolving
 
 ::: {.incremental}
@@ -331,6 +395,8 @@ never had a chance to know better.
   <https://github.com/pharmaverse/admiraldev/issues/547>
 - `{admiral}` CONTRIBUTING — AI Assistance policy —
   <https://pharmaverse.github.io/admiral/main/CONTRIBUTING.html#acknowledgements-for-contributions>
+- RConsortium `pharma-skills` (Pilot 7) —
+  <https://github.com/RConsortium/pharma-skills>
 - pharmaverse examples site — <https://pharmaverse.github.io/examples/>
 - rOpenSci AI policy —
   <https://ropensci.org/blog/2026/02/26/ropensci-ai-policy/>
