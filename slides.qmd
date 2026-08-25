@@ -74,16 +74,18 @@ who only knows the function they're editing — not the system it belongs to.
 
 ## A first step, deliberately early
 
-The `{admiral}` team is still working out its formal AI strategy —
-what tools to encourage, what guardrails to set.
+AGENTS.md shipped while the `{admiral}` team was still working out its
+formal AI strategy — what tools to encourage, what guardrails to set.
 
-That conversation is ongoing:
-[`admiraldev` issue #547](https://github.com/pharmaverse/admiraldev/issues/547)
+That conversation played out in
+[`admiraldev` issue #547](https://github.com/pharmaverse/admiraldev/issues/547),
+drawing on rOpenSci, pyOpenSci, scikit-learn, and Linux kernel AI-contribution
+policies.
 
 ::: {.callout}
-The consensus so far: **gain real experience before locking in formal
-guidance.** AGENTS.md is the first tangible infrastructure to come out of
-that thinking.
+The approach at the time: **gain real experience before locking in formal
+guidance.** AGENTS.md was the first tangible infrastructure to come out of
+that thinking — and it shaped the policy that followed.
 :::
 
 # How {admiral} builds AGENTS.md
@@ -299,7 +301,10 @@ Q&A about roadmap / contributing that piece upstream.
 - Per-package YAML context is written, but not yet **consumed** by
   `{admiralci}` — vignette sync is live today; ecosystem/ADaM-fundamentals
   sections are the next piece
-- No formal `{admiral}` AI policy yet — issue #547 is open
+- `{admiral}`'s formal AI policy **landed 2026-04-27**: an "AI Assistance"
+  paragraph in [CONTRIBUTING](https://pharmaverse.github.io/admiral/main/CONTRIBUTING.html#acknowledgements-for-contributions) —
+  core team may use AI while staying in the loop; external contributors
+  read the contributing guide and Programming Strategy first
 - We don't always know whether a contribution was AI-assisted, and
   increasingly it may not matter as much as *whether the code is right*
 :::
@@ -322,8 +327,10 @@ never had a chance to know better.
   <https://github.com/pharmaverse/admiral/blob/main/AGENTS.md>
 - `sync-admiralci-agents` workflow (live) —
   <https://github.com/pharmaverse/admiral/blob/main/.github/workflows/sync-admiralci-agents.yml>
-- pharmaverse AI strategy discussion —
+- pharmaverse AI strategy discussion (closed 2026-04-27) —
   <https://github.com/pharmaverse/admiraldev/issues/547>
+- `{admiral}` CONTRIBUTING — AI Assistance policy —
+  <https://pharmaverse.github.io/admiral/main/CONTRIBUTING.html#acknowledgements-for-contributions>
 - pharmaverse examples site — <https://pharmaverse.github.io/examples/>
 - rOpenSci AI policy —
   <https://ropensci.org/blog/2026/02/26/ropensci-ai-policy/>

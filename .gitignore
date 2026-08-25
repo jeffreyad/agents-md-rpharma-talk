@@ -1,3 +1,5 @@
 /.quarto/
 slides.html
 slides_files/
+
+**/*.quarto_ipynb
