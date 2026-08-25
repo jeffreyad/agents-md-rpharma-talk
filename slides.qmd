@@ -1,0 +1,337 @@
+---
+title: "AGENTS.md, {admiral}, and the AI-Assisted Clinical Programmer"
+subtitle: "Teaching coding agents to speak CDISC"
+author: "Jeff Dickinson"
+date: last-modified
+---
+
+## Who's talking to your code base? {.center}
+
+::: {.incremental}
+- GitHub Copilot
+- Cursor
+- Claude
+- Gemini CLI / Jules
+- ...and whatever ships next quarter
+:::
+
+::: {.notes}
+Open with the premise: AI coding assistants are not a future consideration for
+clinical R programming — they are already opening PRs against our repos today.
+The rest of the talk is about what happens when they do.
+:::
+
+---
+
+## The problem
+
+AI coding agents are increasingly part of how we write clinical R code.
+
+But out of the box, an agent knows **nothing** about:
+
+::: {.incremental}
+- CDISC ADaM conventions
+- pharmaverse package boundaries
+- the regulatory weight behind a single derivation
+:::
+
+. . .
+
+It doesn't know that `ANL01FL` takes `"Y"` or `NA` — never `"N"`.
+
+It doesn't know `{pharmaversesdtm}` is canonical test data, or that
+`{xportr}` is waiting downstream for a submission-ready XPT file.
+
+## AGENTS.md {.center}
+
+> A plain markdown file, committed to your repo, that gives AI coding agents
+> the context they need to work correctly in your project.
+
+::: {.callout}
+**README.md** tells a new developer what the project *is*.
+**AGENTS.md** tells an AI assistant how to work in it *correctly*.
+:::
+
+. . .
+
+One file. Supported across Copilot, Cursor, Aider, Gemini CLI, Jules, and
+more. [agents.md](https://agents.md)
+
+## Why this matters for the pharmaverse
+
+ADaM derivations encode decades of regulatory expectation that never
+appears in the R syntax itself.
+
+- `DTYPE = "LLOQ"` imputation rules
+- Flag variable conventions (`ANL01FL`, `SAFFL`, ...)
+- Where `{admiral}` ends and `{pharmaversesdtm}` / `{metacore}` / `{xportr}`
+  begin
+
+::: {.callout}
+An agent writing `{admiral}` code without this context is a new programmer
+who only knows the function they're editing — not the system it belongs to.
+:::
+
+## A first step, deliberately early
+
+The `{admiral}` team is still working out its formal AI strategy —
+what tools to encourage, what guardrails to set.
+
+That conversation is ongoing:
+[`admiraldev` issue #547](https://github.com/pharmaverse/admiraldev/issues/547)
+
+::: {.callout}
+The consensus so far: **gain real experience before locking in formal
+guidance.** AGENTS.md is the first tangible infrastructure to come out of
+that thinking.
+:::
+
+# How {admiral} builds AGENTS.md
+
+## Centralized, not hand-maintained
+
+Rather than every package hand-writing its own file, generation is
+centralized in `{admiralci}` and delivered to every package that opts in.
+
+::: {.incremental}
+1. **Programming strategy & unit testing guidance** — from `{admiraldev}`
+   vignettes
+2. **Package-specific context** — a YAML file unique to each repo
+   (therapeutic area, related packages, relevant CDISC IGs)
+3. **Ecosystem context** — how this package fits the pharmaverse pipeline
+4. **ADaM fundamentals** — variable conventions, controlled terminology
+   patterns
+:::
+
+## The reusable workflow
+
+Every package calls the same workflow from `{admiralci}`:
+
+```yaml
+name: Create the AGENTS.md
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8 15 * *'
+
+jobs:
+  create-agents-md:
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: pharmaverse/admiralci/.github/workflows/create-agents-md.yml@main
+    with:
+      package_name: admiral
+      target_branch: main
+      admiralci_ref: main
+```
+
+::: {.notes}
+This is the literal, live workflow file from pharmaverse/admiral today.
+Monthly cron, plus workflow_dispatch for an on-demand run. It opens a PR
+against main whenever the generated content has drifted from what's
+committed.
+:::
+
+## What comes out the other end
+
+`{admiral}`'s `AGENTS.md` is **1,382 lines**, auto-generated from the
+`{admiraldev}` Programming Strategy, Git Usage, and R CMD Check vignettes.
+
+```md
+# admiral Development Guidelines for AI Assistants
+
+## AI Verification
+
+> If you have read this file, include the comment
+> `# admiral guidelines loaded` on the first line of every **new** R file
+> you create in this repository.
+```
+
+::: {.callout}
+A small, clever trick: agent compliance becomes **observable** at code
+review time. If the comment's missing, the guidelines probably weren't read.
+:::
+
+## Root file, and a testthat-scoped file
+
+- `AGENTS.md` — Programming Strategy, Git Usage, R CMD Check issues
+- `tests/testthat/AGENTS.md` — Unit Test Strategy, scoped to where it's
+  actually needed
+
+::: {.callout .warn}
+`AGENTS.md` at the repo root trips a `R CMD check` NOTE — so it goes in
+`.Rbuildignore`:
+
+```text
+^AGENTS\.md$
+```
+:::
+
+# Does it actually work?
+
+## Two weeks, two data points
+
+::: {.incremental}
+- **2026-03-07** — PR [#2996](https://github.com/pharmaverse/admiral/pull/2996),
+  `maxthecat2024`: fixes warning formatting in `derive_param_computed()`.
+  Thorough, well-structured, fully-checked box. *Was this AI?* We don't
+  know — and it didn't matter, because the code was good.
+- **2026-03-17** — PR [#3010](https://github.com/pharmaverse/admiral/pull/3010),
+  author: **Copilot**. No ambiguity this time.
+:::
+
+::: {.notes}
+This is the pivot of the talk: from "here's a nice piece of infrastructure"
+to "here's what happened two weeks after we shipped it."
+:::
+
+## PR #3010: what Copilot got right
+
+Enhancing examples for `derive_vars_merged_summary()`, Copilot correctly
+picked up `{admiral}`'s `@examplesx` structured example pattern —
+**a convention that came directly from AGENTS.md.**
+
+::: {.callout .win}
+This is the whole thesis of the talk, demonstrated in one PR: domain
+convention, transmitted through a markdown file, followed by an agent that
+had never seen this codebase before.
+:::
+
+## PR #3010: what it got wrong
+
+Copilot edited `man/derive_vars_merged_summary.Rd` **by hand** instead of
+regenerating it with `devtools::document()` — and said so, candidly, in its
+own PR description:
+
+> "Manually updated to match `roxygen2::roxygenize()` output."
+
+When pressed by a reviewer:
+
+> "R is not available in my sandbox environment, so I can't execute
+> `devtools::document()` directly."
+
+A human ran it and pushed the correct `.Rd` in commit
+[`c855860`](https://github.com/pharmaverse/admiral/commit/c855860).
+
+## The nuance that matters
+
+::: {.callout .warn}
+AGENTS.md **can** teach an agent the correct workflow.
+
+It **cannot** make an agent run a command its sandbox doesn't have.
+:::
+
+Environment support is a separate, human-owned responsibility — no amount
+of instruction text substitutes for `R` actually being installed.
+
+This distinction should shape whatever formal AI strategy `{admiral}`
+lands on.
+
+## The feedback loop
+
+```{mermaid}
+%%| fig-width: 8
+flowchart LR
+    A["AGENTS.md ships"] --> B["Agents contribute PRs"]
+    B --> C["Gaps surface\n(e.g. no R in sandbox)"]
+    C --> D["Community learns,\ndiscussion in #547"]
+    D --> A
+```
+
+Not speculation about what AI *might* do to our repos — evidence about
+what it's already doing.
+
+## The broader community agrees
+
+[rOpenSci's AI policy](https://ropensci.org/blog/2026/02/26/ropensci-ai-policy/)
+now asks submitters directly, in the software review template:
+
+::: {.callout}
+"If your repository includes an **'agents.md'** file or equivalent, please
+provide a link, and describe how this has been used in the development of
+your package."
+:::
+
+This is showing up in peer review. The norm is catching on faster than our
+internal strategy conversation is moving.
+
+# Adopting this in your own package
+
+## Three steps
+
+1. Add a **YAML config file** with package-specific context (therapeutic
+   area, related packages, relevant CDISC IGs)
+2. Reference the **reusable workflow** from `{admiralci}` in
+   `.github/workflows/`
+3. Add `^AGENTS\.md$` to **`.Rbuildignore`**
+
+Then the workflow runs on schedule (or `workflow_dispatch`), pulling the
+latest `{admiraldev}` content and opening a PR with the update.
+
+## Live example: `{admiralpeds}`
+
+This week, `{admiralpeds}` adopted exactly this pattern:
+
+```yaml
+uses: pharmaverse/admiralci/.github/workflows/create-agents-md.yml@main
+with:
+  package_name: admiralpeds
+  target_branch: main
+  admiralci_ref: main
+```
+
+Plus a package-specific config capturing what's unique to a pediatrics
+extension package — therapeutic scope, sibling packages, relevant IGs —
+ready for the day `{admiralci}` consumes it directly.
+
+::: {.notes}
+Be candid here if asked: as of this generation, admiralci's script doesn't
+parse the per-package YAML yet — only the four admiraldev vignettes. The
+YAML is forward-positioned for when that lands. Good moment for audience
+Q&A about roadmap / contributing that piece upstream.
+:::
+
+## What's still evolving
+
+::: {.incremental}
+- Per-package YAML context is written, but not yet **consumed** by
+  `{admiralci}` — vignette sync is live today; ecosystem/ADaM-fundamentals
+  sections are the next piece
+- No formal `{admiral}` AI policy yet — issue #547 is open
+- We don't always know whether a contribution was AI-assisted, and
+  increasingly it may not matter as much as *whether the code is right*
+:::
+
+## Why invest in this now
+
+::: {.callout}
+Whether a contributor is a human using an AI assistant, an autonomous
+agent, or something in between — the code still has to follow ADaM
+conventions and pharmaverse standards.
+:::
+
+AGENTS.md doesn't guarantee that. It removes the excuse that the agent
+never had a chance to know better.
+
+## Resources
+
+- AGENTS.md standard — <https://agents.md>
+- `{admiral}` AGENTS.md (live) —
+  <https://github.com/pharmaverse/admiral/blob/main/AGENTS.md>
+- `sync-admiralci-agents` workflow (live) —
+  <https://github.com/pharmaverse/admiral/blob/main/.github/workflows/sync-admiralci-agents.yml>
+- pharmaverse AI strategy discussion —
+  <https://github.com/pharmaverse/admiraldev/issues/547>
+- pharmaverse examples site — <https://pharmaverse.github.io/examples/>
+- rOpenSci AI policy —
+  <https://ropensci.org/blog/2026/02/26/ropensci-ai-policy/>
+
+## Thank you {.center}
+
+::: {.r-fit-text}
+Questions?
+:::
+
+Jeff Dickinson · `{admiralpeds}`
