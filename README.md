@@ -18,3 +18,9 @@ Output: `slides.html` (self-contained; open directly in a browser).
 - `theme.scss` — pharmaverse-ish revealjs theme tweaks
 - `assets/` — hex logos ({admiral}, {admiralpeds})
 - `_quarto.yml` — project/render config
+- `.github/workflows/publish.yml` — renders and publishes to GitHub Pages
+  (`gh-pages` branch) on every push to `master`
+
+## Live site
+
+<https://jeffreyad.github.io/agents-md-rpharma-talk/>
