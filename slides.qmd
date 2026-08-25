@@ -234,11 +234,11 @@ lands on.
 ## The feedback loop
 
 ```{mermaid}
-%%| fig-width: 8
+%%| fig-width: 9
 flowchart LR
     A["AGENTS.md ships"] --> B["Agents contribute PRs"]
-    B --> C["Gaps surface\n(e.g. no R in sandbox)"]
-    C --> D["Community learns,\ndiscussion in #547"]
+    B --> C["Gaps surface<br/>(e.g. no R in sandbox)"]
+    C --> D["Community learns,<br/>policy lands (#547)"]
     D --> A
 ```
 
