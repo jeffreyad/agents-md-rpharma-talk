@@ -95,15 +95,20 @@ that thinking — and it shaped the policy that followed.
 Rather than every package hand-writing its own file, generation is
 centralized in `{admiralci}` and delivered to every package that opts in.
 
-::: {.incremental}
-1. **Programming strategy & unit testing guidance** — from `{admiraldev}`
-   vignettes
-2. **Package-specific context** — a YAML file unique to each repo
-   (therapeutic area, related packages, relevant CDISC IGs)
-3. **Ecosystem context** — how this package fits the pharmaverse pipeline
-4. **ADaM fundamentals** — variable conventions, controlled terminology
-   patterns
-:::
+**Today**
+
+- **Programming strategy & unit testing guidance** — from `{admiraldev}`
+  vignettes
+
+. . .
+
+**Next** ([admiralci#246](https://github.com/pharmaverse/admiralci/issues/246))
+
+- **Package-specific context** — a YAML file unique to each repo
+  (therapeutic area, related packages, relevant CDISC IGs)
+- **Ecosystem context** — how this package fits the pharmaverse pipeline
+- **ADaM fundamentals** — variable conventions, controlled terminology
+  patterns
 
 ## The reusable workflow
 
@@ -156,6 +161,12 @@ A small, clever trick: agent compliance becomes **observable** at code
 review time. If the comment's missing, the guidelines probably weren't read.
 :::
 
+. . .
+
+And it stays current: a "Testing Errors and Warnings" section added to
+`{admiraldev}` on 30 Sep reached `{admiral}` and `{admiralpeds}` with the
+next sync, with no hand edits.
+
 ## Root file, and a testthat-scoped file
 
 - `AGENTS.md` — Programming Strategy, Git Usage, R CMD Check issues
@@ -169,6 +180,8 @@ review time. If the comment's missing, the guidelines probably weren't read.
 ```text
 ^AGENTS\.md$
 ```
+
+Only the root file needs this; `tests/testthat/AGENTS.md` doesn't.
 :::
 
 # Does it actually work?
@@ -240,10 +253,45 @@ flowchart LR
     B --> C["Gaps surface<br/>(e.g. no R in sandbox)"]
     C --> D["Community learns,<br/>policy lands (#547)"]
     D --> A
+    C --> E["Guidance fixed upstream<br/>in {admiraldev}"]
+    E --> A
 ```
 
 Not speculation about what AI *might* do to our repos — evidence about
 what it's already doing.
+
+## Who reviews a generated file?
+
+Reviewing `{admiralpeds}`' AGENTS.md PR, a reviewer left careful wording
+fixes on `tests/testthat/AGENTS.md` — backticks, punctuation, a typo.
+
+. . .
+
+But that file is **generated**. Any edit there is overwritten by next
+month's sync.
+
+- Some fixes had already landed in `{admiraldev}` — the resync picked them up
+- The rest went upstream:
+  [admiraldev#580](https://github.com/pharmaverse/admiraldev/issues/580)
+
+::: {.callout}
+Centralizing the guidance also centralizes its **review**. PRs touching
+generated files need a note: *don't edit here — fix the source.*
+:::
+
+## Agents copy guidance faithfully, mistakes included
+
+The unit test guidance says to use `tribble()` "from the `tibble`
+package"… then shows `dplyr::tribble()`.
+
+Meanwhile, `{admiral}` itself uses `tibble::tribble()` in ~30 files vs 1
+for `dplyr::tribble()`.
+
+::: {.callout .warn}
+An agent follows what the guidance **says**, not what the codebase
+**does**. Once agents read your vignettes, keeping them accurate matters
+more than it used to.
+:::
 
 ## The broader community agrees
 
@@ -263,30 +311,68 @@ internal strategy conversation is moving.
 
 ## Three steps
 
-1. Add a **YAML config file** with package-specific context (therapeutic
-   area, related packages, relevant CDISC IGs)
-2. Reference the **reusable workflow** from `{admiralci}` in
+1. Reference the **reusable workflow** from `{admiralci}` in
    `.github/workflows/`
-3. Add `^AGENTS\.md$` to **`.Rbuildignore`**
+2. Add `^AGENTS\.md$` to **`.Rbuildignore`**
+3. *(Forward-looking)* Add a **YAML config file** with package-specific
+   context (therapeutic area, related packages, relevant CDISC IGs) —
+   not yet read by `{admiralci}`, see
+   [admiralci#246](https://github.com/pharmaverse/admiralci/issues/246)
 
 Then the workflow runs on schedule (or `workflow_dispatch`), pulling the
 latest `{admiraldev}` content and opening a PR with the update.
 
-## Live example: `{admiralpeds}`
+## Gotcha: the first PR
 
-This week, `{admiralpeds}` adopted exactly this pattern:
+`workflow_dispatch` only works once the workflow is on the **default
+branch** — so you can't trigger it from the PR that adds it.
+
+. . .
+
+Instead, run the same script locally to generate the first files:
+
+```bash
+Rscript create_agents_md.R admiralonco
+```
+
+Same script, same output as the workflow.
+
+## Live examples: two adopters so far
 
 ```yaml
 uses: pharmaverse/admiralci/.github/workflows/create-agents-md.yml@main
 with:
-  package_name: admiralpeds
+  package_name: admiralpeds   # or admiralonco
   target_branch: main
   admiralci_ref: main
 ```
 
-Plus a package-specific config capturing what's unique to a pediatrics
-extension package — therapeutic scope, sibling packages, relevant IGs —
-ready for the day `{admiralci}` consumes it directly.
+- `{admiralpeds}` —
+  [admiralpeds#150](https://github.com/pharmaverse/admiralpeds/pull/150)
+- `{admiralonco}` —
+  [admiralonco#364](https://github.com/pharmaverse/admiralonco/pull/364)
+
+Each adds a package-specific config capturing what's unique to its
+therapeutic area — ready for the day `{admiralci}` consumes it directly.
+
+## What the config captures
+
+From `{admiralonco}`'s `agents-config.yml`:
+
+```yaml
+oncology_specific_conventions:
+  - The derive_param_*() functions (e.g. derive_param_bor(),
+    derive_param_confirmed_bor(), derive_param_response()) and filter_pd()
+    are deprecated. Use admiral::derive_extreme_event() with admiralonco's
+    predefined event()/event_joined() objects (e.g. rsp_y, bor_cr, bor_pr,
+    cbor_cr, crsp_y_cr, cb_y) instead, and do not add new code that calls
+    the deprecated functions.
+```
+
+::: {.callout}
+Package knowledge an agent can't infer from reading the source: the
+deprecated functions are still there, and still documented.
+:::
 
 ::: {.notes}
 Be candid here if asked: as of this generation, admiralci's script doesn't
@@ -363,8 +449,9 @@ codebase?**
 
 ::: {.incremental}
 - Per-package YAML context is written, but not yet **consumed** by
-  `{admiralci}` — vignette sync is live today; ecosystem/ADaM-fundamentals
-  sections are the next piece
+  `{admiralci}` — tracked in
+  [admiralci#246](https://github.com/pharmaverse/admiralci/issues/246);
+  ecosystem/ADaM-fundamentals sections come after
 - `{admiral}`'s formal AI policy **landed 2026-04-27**: an "AI Assistance"
   paragraph in [CONTRIBUTING](https://pharmaverse.github.io/admiral/main/CONTRIBUTING.html#acknowledgements-for-contributions) —
   core team may use AI while staying in the loop; external contributors
@@ -391,6 +478,12 @@ never had a chance to know better.
   <https://github.com/pharmaverse/admiral/blob/main/AGENTS.md>
 - `sync-admiralci-agents` workflow (live) —
   <https://github.com/pharmaverse/admiral/blob/main/.github/workflows/sync-admiralci-agents.yml>
+- `create_agents_md.R` generator script —
+  <https://github.com/pharmaverse/admiralci/blob/main/.github/scripts/create_agents_md.R>
+- Per-package config support (admiralci#246) —
+  <https://github.com/pharmaverse/admiralci/issues/246>
+- Upstream guidance fixes (admiraldev#580) —
+  <https://github.com/pharmaverse/admiraldev/issues/580>
 - pharmaverse AI strategy discussion (closed 2026-04-27) —
   <https://github.com/pharmaverse/admiraldev/issues/547>
 - `{admiral}` CONTRIBUTING — AI Assistance policy —
