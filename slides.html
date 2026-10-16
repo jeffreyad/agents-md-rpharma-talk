@@ -6,11 +6,11 @@
 <script src="slides_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting-5c1318cf63eba56dbef7ba16bc7d56f5.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Jeff Dickinson">
-  <meta name="dcterms.date" content="2026-08-25">
+  <meta name="dcterms.date" content="2026-10-16">
   <title>AGENTS.md, {admiral}, and the AI-Assisted Clinical Programmer</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,10 +21,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -208,12 +211,12 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Jeff Dickinson 
+Jeff Dickinson
 </div>
 </div>
 </div>
 
-  <p class="date">2026-08-25</p>
+  <p class="date">2026-10-16</p>
 </section>
 <section id="whos-talking-to-your-code-base" class="slide level2 center">
 <h2>Who’s talking to your code base?</h2>
@@ -304,12 +307,18 @@ Jeff Dickinson
 <section id="centralized-not-hand-maintained" class="slide level2">
 <h2>Centralized, not hand-maintained</h2>
 <p>Rather than every package hand-writing its own file, generation is centralized in <code>{admiralci}</code> and delivered to every package that opts in.</p>
-<ol type="1">
-<li class="fragment"><strong>Programming strategy &amp; unit testing guidance</strong> — from <code>{admiraldev}</code> vignettes</li>
-<li class="fragment"><strong>Package-specific context</strong> — a YAML file unique to each repo (therapeutic area, related packages, relevant CDISC IGs)</li>
-<li class="fragment"><strong>Ecosystem context</strong> — how this package fits the pharmaverse pipeline</li>
-<li class="fragment"><strong>ADaM fundamentals</strong> — variable conventions, controlled terminology patterns</li>
-</ol>
+<p><strong>Today</strong></p>
+<ul>
+<li><strong>Programming strategy &amp; unit testing guidance</strong> — from <code>{admiraldev}</code> vignettes</li>
+</ul>
+<div class="fragment">
+<p><strong>Next</strong> (<a href="https://github.com/pharmaverse/admiralci/issues/246">admiralci#246</a>)</p>
+<ul>
+<li><strong>Package-specific context</strong> — a YAML file unique to each repo (therapeutic area, related packages, relevant CDISC IGs)</li>
+<li><strong>Ecosystem context</strong> — how this package fits the pharmaverse pipeline</li>
+<li><strong>ADaM fundamentals</strong> — variable conventions, controlled terminology patterns</li>
+</ul>
+</div>
 </section>
 <section id="the-reusable-workflow" class="slide level2">
 <h2>The reusable workflow</h2>
@@ -362,6 +371,9 @@ Jeff Dickinson
 </div>
 </div>
 </div>
+<div class="fragment">
+<p>And it stays current: a “Testing Errors and Warnings” section added to <code>{admiraldev}</code> on 30 Sep reached <code>{admiral}</code> and <code>{admiralpeds}</code> with the next sync, with no hand edits.</p>
+</div>
 </section>
 <section id="root-file-and-a-testthat-scoped-file" class="slide level2">
 <h2>Root file, and a testthat-scoped file</h2>
@@ -375,6 +387,7 @@ Jeff Dickinson
 <div class="callout-content">
 <p><code>AGENTS.md</code> at the repo root trips a <code>R CMD check</code> NOTE — so it goes in <code>.Rbuildignore</code>:</p>
 <pre class="text"><code>^AGENTS\.md$</code></pre>
+<p>Only the root file needs this; <code>tests/testthat/AGENTS.md</code> doesn’t.</p>
 </div>
 </div>
 </div>
@@ -457,6 +470,8 @@ Jeff Dickinson
     B --&gt; C["Gaps surface&lt;br/&gt;(e.g. no R in sandbox)"]
     C --&gt; D["Community learns,&lt;br/&gt;policy lands (#547)"]
     D --&gt; A
+    C --&gt; E["Guidance fixed upstream&lt;br/&gt;in {admiraldev}"]
+    E --&gt; A
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -464,6 +479,38 @@ Jeff Dickinson
 </div>
 </div>
 <p>Not speculation about what AI <em>might</em> do to our repos — evidence about what it’s already doing.</p>
+</section>
+<section id="who-reviews-a-generated-file" class="slide level2">
+<h2>Who reviews a generated file?</h2>
+<p>Reviewing <code>{admiralpeds}</code>’ AGENTS.md PR, a reviewer left careful wording fixes on <code>tests/testthat/AGENTS.md</code> — backticks, punctuation, a typo.</p>
+<div class="fragment">
+<p>But that file is <strong>generated</strong>. Any edit there is overwritten by next month’s sync.</p>
+<ul>
+<li>Some fixes had already landed in <code>{admiraldev}</code> — the resync picked them up</li>
+<li>The rest went upstream: <a href="https://github.com/pharmaverse/admiraldev/issues/580">admiraldev#580</a></li>
+</ul>
+<div class="callout callout-none no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<p>Centralizing the guidance also centralizes its <strong>review</strong>. PRs touching generated files need a note: <em>don’t edit here — fix the source.</em></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="agents-copy-guidance-faithfully-mistakes-included" class="slide level2">
+<h2>Agents copy guidance faithfully, mistakes included</h2>
+<p>The unit test guidance says to use <code>tribble()</code> “from the <code>tibble</code> package”… then shows <code>dplyr::tribble()</code>.</p>
+<p>Meanwhile, <code>{admiral}</code> itself uses <code>tibble::tribble()</code> in ~30 files vs 1 for <code>dplyr::tribble()</code>.</p>
+<div class="warn">
+<div class="callout callout-none no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<p>An agent follows what the guidance <strong>says</strong>, not what the codebase <strong>does</strong>. Once agents read your vignettes, keeping them accurate matters more than it used to.</p>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="the-broader-community-agrees" class="slide level2">
 <h2>The broader community agrees</h2>
@@ -485,21 +532,51 @@ Jeff Dickinson
 <section id="three-steps" class="slide level2">
 <h2>Three steps</h2>
 <ol type="1">
-<li>Add a <strong>YAML config file</strong> with package-specific context (therapeutic area, related packages, relevant CDISC IGs)</li>
 <li>Reference the <strong>reusable workflow</strong> from <code>{admiralci}</code> in <code>.github/workflows/</code></li>
 <li>Add <code>^AGENTS\.md$</code> to <strong><code>.Rbuildignore</code></strong></li>
+<li><em>(Forward-looking)</em> Add a <strong>YAML config file</strong> with package-specific context (therapeutic area, related packages, relevant CDISC IGs) — not yet read by <code>{admiralci}</code>, see <a href="https://github.com/pharmaverse/admiralci/issues/246">admiralci#246</a></li>
 </ol>
 <p>Then the workflow runs on schedule (or <code>workflow_dispatch</code>), pulling the latest <code>{admiraldev}</code> content and opening a PR with the update.</p>
 </section>
-<section id="live-example-admiralpeds" class="slide level2">
-<h2>Live example: <code>{admiralpeds}</code></h2>
-<p>This week, <code>{admiralpeds}</code> adopted exactly this pattern:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">uses</span><span class="kw">:</span><span class="at"> pharmaverse/admiralci/.github/workflows/create-agents-md.yml@main</span></span>
-<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">package_name</span><span class="kw">:</span><span class="at"> admiralpeds</span></span>
-<span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">target_branch</span><span class="kw">:</span><span class="at"> main</span></span>
-<span id="cb4-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">admiralci_ref</span><span class="kw">:</span><span class="at"> main</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Plus a package-specific config capturing what’s unique to a pediatrics extension package — therapeutic scope, sibling packages, relevant IGs — ready for the day <code>{admiralci}</code> consumes it directly.</p>
+<section id="gotcha-the-first-pr" class="slide level2">
+<h2>Gotcha: the first PR</h2>
+<p><code>workflow_dispatch</code> only works once the workflow is on the <strong>default branch</strong> — so you can’t trigger it from the PR that adds it.</p>
+<div class="fragment">
+<p>Instead, run the same script locally to generate the first files:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> create_agents_md.R admiralonco</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Same script, same output as the workflow.</p>
+</div>
+</section>
+<section id="live-examples-two-adopters-so-far" class="slide level2">
+<h2>Live examples: two adopters so far</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">uses</span><span class="kw">:</span><span class="at"> pharmaverse/admiralci/.github/workflows/create-agents-md.yml@main</span></span>
+<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">package_name</span><span class="kw">:</span><span class="at"> admiralpeds</span><span class="co">   # or admiralonco</span></span>
+<span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">target_branch</span><span class="kw">:</span><span class="at"> main</span></span>
+<span id="cb5-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">admiralci_ref</span><span class="kw">:</span><span class="at"> main</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>{admiralpeds}</code> — <a href="https://github.com/pharmaverse/admiralpeds/pull/150">admiralpeds#150</a></li>
+<li><code>{admiralonco}</code> — <a href="https://github.com/pharmaverse/admiralonco/pull/364">admiralonco#364</a></li>
+</ul>
+<p>Each adds a package-specific config capturing what’s unique to its therapeutic area — ready for the day <code>{admiralci}</code> consumes it directly.</p>
+</section>
+<section id="what-the-config-captures" class="slide level2">
+<h2>What the config captures</h2>
+<p>From <code>{admiralonco}</code>’s <code>agents-config.yml</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">oncology_specific_conventions</span><span class="kw">:</span></span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> The derive_param_*() functions (e.g. derive_param_bor(),</span></span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">    derive_param_confirmed_bor(), derive_param_response()) and filter_pd()</span></span>
+<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">    are deprecated. Use admiral::derive_extreme_event() with admiralonco's</span></span>
+<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">    predefined event()/event_joined() objects (e.g. rsp_y, bor_cr, bor_pr,</span></span>
+<span id="cb6-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">    cbor_cr, crsp_y_cr, cb_y) instead, and do not add new code that calls</span></span>
+<span id="cb6-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">    the deprecated functions.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-none no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<p>Package knowledge an agent can’t infer from reading the source: the deprecated functions are still there, and still documented.</p>
+</div>
+</div>
+</div>
 <aside class="notes">
 <p>Be candid here if asked: as of this generation, admiralci’s script doesn’t parse the per-package YAML yet — only the four admiraldev vignettes. The YAML is forward-positioned for when that lands. Good moment for audience Q&amp;A about roadmap / contributing that piece upstream.</p>
 <style type="text/css">
@@ -579,16 +656,16 @@ Jeff Dickinson
 <li class="fragment"><strong>admiral-adsl</strong> — derive ADSL from SDTM domains</li>
 <li class="fragment"><strong>admiral-bds</strong> — derive BDS findings datasets (ADVS, ADLB)</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> admiral-adsl</span></span>
-<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">description</span><span class="kw">: </span><span class="ch">&gt;</span></span>
-<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a>  Derives an ADaM Subject-Level Analysis Dataset (ADSL) using the {admiral}</span>
-<span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a>  R package and pharmaverse ecosystem. Use when a user needs to create ADSL</span>
-<span id="cb5-5"><a href="" aria-hidden="true" tabindex="-1"></a>  from SDTM domains...</span>
-<span id="cb5-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb5-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pharmaverse</span><span class="kw">:</span><span class="at"> </span><span class="st">"true"</span></span>
-<span id="cb5-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">parent</span><span class="kw">:</span><span class="at"> admiral</span></span>
-<span id="cb5-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">compatibility</span><span class="kw">: </span><span class="ch">&gt;</span></span>
-<span id="cb5-10"><a href="" aria-hidden="true" tabindex="-1"></a>  Requires R with admiral, dplyr, lubridate, and pharmaversesdtm installed.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> admiral-adsl</span></span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">description</span><span class="kw">: </span><span class="ch">&gt;</span></span>
+<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a>  Derives an ADaM Subject-Level Analysis Dataset (ADSL) using the {admiral}</span>
+<span id="cb7-4"><a href="" aria-hidden="true" tabindex="-1"></a>  R package and pharmaverse ecosystem. Use when a user needs to create ADSL</span>
+<span id="cb7-5"><a href="" aria-hidden="true" tabindex="-1"></a>  from SDTM domains...</span>
+<span id="cb7-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb7-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pharmaverse</span><span class="kw">:</span><span class="at"> </span><span class="st">"true"</span></span>
+<span id="cb7-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">parent</span><span class="kw">:</span><span class="at"> admiral</span></span>
+<span id="cb7-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">compatibility</span><span class="kw">: </span><span class="ch">&gt;</span></span>
+<span id="cb7-10"><a href="" aria-hidden="true" tabindex="-1"></a>  Requires R with admiral, dplyr, lubridate, and pharmaversesdtm installed.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Installed with one command: <code>npx skills add RConsortium/pharma-skills --skill admiral-adsl</code></p>
 </section>
 <section id="complementary-not-competing" class="slide level2">
@@ -606,7 +683,7 @@ Jeff Dickinson
 <section id="whats-still-evolving" class="slide level2">
 <h2>What’s still evolving</h2>
 <ul>
-<li class="fragment">Per-package YAML context is written, but not yet <strong>consumed</strong> by <code>{admiralci}</code> — vignette sync is live today; ecosystem/ADaM-fundamentals sections are the next piece</li>
+<li class="fragment">Per-package YAML context is written, but not yet <strong>consumed</strong> by <code>{admiralci}</code> — tracked in <a href="https://github.com/pharmaverse/admiralci/issues/246">admiralci#246</a>; ecosystem/ADaM-fundamentals sections come after</li>
 <li class="fragment"><code>{admiral}</code>’s formal AI policy <strong>landed 2026-04-27</strong>: an “AI Assistance” paragraph in <a href="https://pharmaverse.github.io/admiral/main/CONTRIBUTING.html#acknowledgements-for-contributions">CONTRIBUTING</a> — core team may use AI while staying in the loop; external contributors read the contributing guide and Programming Strategy first</li>
 <li class="fragment">We don’t always know whether a contribution was AI-assisted, and increasingly it may not matter as much as <em>whether the code is right</em></li>
 </ul>
@@ -628,6 +705,9 @@ Jeff Dickinson
 <li>AGENTS.md standard — <a href="https://agents.md" class="uri">https://agents.md</a></li>
 <li><code>{admiral}</code> AGENTS.md (live) — <a href="https://github.com/pharmaverse/admiral/blob/main/AGENTS.md" class="uri">https://github.com/pharmaverse/admiral/blob/main/AGENTS.md</a></li>
 <li><code>sync-admiralci-agents</code> workflow (live) — <a href="https://github.com/pharmaverse/admiral/blob/main/.github/workflows/sync-admiralci-agents.yml" class="uri">https://github.com/pharmaverse/admiral/blob/main/.github/workflows/sync-admiralci-agents.yml</a></li>
+<li><code>create_agents_md.R</code> generator script — <a href="https://github.com/pharmaverse/admiralci/blob/main/.github/scripts/create_agents_md.R" class="uri">https://github.com/pharmaverse/admiralci/blob/main/.github/scripts/create_agents_md.R</a></li>
+<li>Per-package config support (admiralci#246) — <a href="https://github.com/pharmaverse/admiralci/issues/246" class="uri">https://github.com/pharmaverse/admiralci/issues/246</a></li>
+<li>Upstream guidance fixes (admiraldev#580) — <a href="https://github.com/pharmaverse/admiraldev/issues/580" class="uri">https://github.com/pharmaverse/admiraldev/issues/580</a></li>
 <li>pharmaverse AI strategy discussion (closed 2026-04-27) — <a href="https://github.com/pharmaverse/admiraldev/issues/547" class="uri">https://github.com/pharmaverse/admiraldev/issues/547</a></li>
 <li><code>{admiral}</code> CONTRIBUTING — AI Assistance policy — <a href="https://pharmaverse.github.io/admiral/main/CONTRIBUTING.html#acknowledgements-for-contributions" class="uri">https://pharmaverse.github.io/admiral/main/CONTRIBUTING.html#acknowledgements-for-contributions</a></li>
 <li>RConsortium <code>pharma-skills</code> (Pilot 7) — <a href="https://github.com/RConsortium/pharma-skills" class="uri">https://github.com/RConsortium/pharma-skills</a></li>
