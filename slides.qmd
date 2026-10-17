@@ -3,6 +3,66 @@ title: "AGENTS.md, {admiral}, and the AI-Assisted Clinical Programmer"
 subtitle: "Teaching coding agents to speak CDISC"
 author: "Jeff Dickinson"
 date: last-modified
+title-slide-attributes:
+  data-background-image: assets/slides-qr.svg
+  data-background-size: 160px
+  data-background-position: 4% 92%
+---
+
+## {background-image="assets/time-machine.jpg" background-size="cover"}
+
+::: {.notes}
+"Before we start, let's get in the time machine. Set the dial for
+March 10, 2026. I know, that's only seven months ago. In AI years, that's
+roughly the Cretaceous."
+
+Why that date? It's the day admiraldev issue #547 was opened: the {admiral}
+team's conversation about how to handle AI. That conversation is where this
+talk starts.
+:::
+
+## Destination: March 10, 2026 {.smaller}
+
+:::: {.columns}
+::: {.column width="50%"}
+**The models**
+
+::: {.incremental}
+- Claude **Opus 4.6** & **Sonnet 4.6**: about a month old
+- **GPT-5.4**: five days old
+- **GPT-5.3-Codex**: the new coding model
+- **Gemini 3.1 Pro**: three weeks old
+:::
+:::
+
+::: {.column width="50%"}
+**The headlines**
+
+::: {.incremental}
+- 1M-token context window? *Still in beta.*
+- Agents can run unattended for… **20 minutes!**
+- rOpenSci has just published its AI policy
+- [`admiraldev` #547](https://github.com/pharmaverse/admiraldev/issues/547)
+  opens: *"Formalize our approach to AI"*
+
+:::
+:::
+::::
+
+. . .
+
+::: {.callout}
+Roads? Where we're going, we don't need roads.
+We need an **AGENTS.md**.
+:::
+
+::: {.notes}
+Land the joke, then pivot: this is the world #547 was opened in, and the
+world AGENTS.md shipped into. Every
+model on this slide has since been replaced, and the file still does its job.
+That's the point: the context outlives the model.
+:::
+
 ---
 
 ## Who's talking to your code base? {.center}
@@ -44,6 +104,8 @@ It doesn't know `{pharmaversesdtm}` is canonical test data, or that
 
 ## AGENTS.md {.center}
 
+:::: {.columns}
+::: {.column width="62%"}
 > A plain markdown file, committed to your repo, that gives AI coding agents
 > the context they need to work correctly in your project.
 
@@ -56,6 +118,16 @@ It doesn't know `{pharmaversesdtm}` is canonical test data, or that
 
 One file. Supported across Copilot, Cursor, Aider, Gemini CLI, Jules, and
 more. [agents.md](https://agents.md)
+:::
+
+::: {.column width="38%"}
+![](assets/admiral-agents-hex.png){fig-alt="Hex sticker reading {admiral} AGENTS, showing an AGENTS.md file over a radar screen"}
+
+::: {style="font-size: 0.5em; text-align: center;"}
+From the [pharmaverse blog, 2026-03-31](https://pharmaverse.github.io/blog/posts/2026-03-31-agents-md-admiral-a/agents-md-admiral-and-the-ai-assisted-programmer.html)
+:::
+:::
+::::
 
 ## Why this matters for the pharmaverse
 
@@ -473,6 +545,7 @@ never had a chance to know better.
 
 ## Resources
 
+- **These slides** — <https://jeffreyad.github.io/agents-md-rpharma-talk/>
 - AGENTS.md standard — <https://agents.md>
 - `{admiral}` AGENTS.md (live) —
   <https://github.com/pharmaverse/admiral/blob/main/AGENTS.md>
@@ -496,8 +569,22 @@ never had a chance to know better.
 
 ## Thank you {.center}
 
+:::: {.columns}
+::: {.column width="60%"}
 ::: {.r-fit-text}
 Questions?
 :::
 
 Jeff Dickinson · `{admiralpeds}`
+:::
+
+::: {.column width="40%"}
+::: {style="text-align: center;"}
+![](assets/slides-qr.svg){width="260" fig-alt="QR code linking to these slides"}
+
+::: {style="font-size: 0.55em;"}
+[jeffreyad.github.io/agents-md-rpharma-talk](https://jeffreyad.github.io/agents-md-rpharma-talk/)
+:::
+:::
+:::
+::::
