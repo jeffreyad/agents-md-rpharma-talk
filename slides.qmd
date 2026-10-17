@@ -11,6 +11,10 @@ date: last-modified
 "Before we start, let's get in the time machine. Set the dial for
 March 10, 2026. I know, that's only seven months ago. In AI years, that's
 roughly the Cretaceous."
+
+Why that date? It's the day admiraldev issue #547 was opened: the {admiral}
+team's conversation about how to handle AI. That conversation is where this
+talk starts.
 :::
 
 ## Destination: March 10, 2026 {.smaller}
@@ -34,7 +38,9 @@ roughly the Cretaceous."
 - 1M-token context window? *Still in beta.*
 - Agents can run unattended for… **20 minutes!**
 - rOpenSci has just published its AI policy
-- `{admiral}`'s AI policy? *Not written yet*
+- [`admiraldev` #547](https://github.com/pharmaverse/admiraldev/issues/547)
+  opens: *"Formalize our approach to AI"*
+
 :::
 :::
 ::::
@@ -47,7 +53,8 @@ We need an **AGENTS.md**.
 :::
 
 ::: {.notes}
-Land the joke, then pivot: this is the world AGENTS.md shipped into. Every
+Land the joke, then pivot: this is the world #547 was opened in, and the
+world AGENTS.md shipped into. Every
 model on this slide has since been replaced, and the file still does its job.
 That's the point: the context outlives the model.
 :::
