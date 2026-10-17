@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Jeff Dickinson">
-  <meta name="dcterms.date" content="2026-10-16">
+  <meta name="dcterms.date" content="2026-10-17">
   <title>AGENTS.md, {admiral}, and the AI-Assisted Clinical Programmer</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -204,7 +204,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
+<section id="title-slide" data-background-image="assets/slides-qr.svg" data-background-position="4% 92%" data-background-size="160px" class="quarto-title-block center">
   <h1 class="title">AGENTS.md, {admiral}, and the AI-Assisted Clinical Programmer</h1>
   <p class="subtitle">Teaching coding agents to speak CDISC</p>
 
@@ -216,7 +216,67 @@ Jeff Dickinson
 </div>
 </div>
 
-  <p class="date">2026-10-16</p>
+  <p class="date">2026-10-17</p>
+</section>
+<section id="section" class="slide level2" data-background-image="assets/time-machine.jpg" data-background-size="cover">
+<h2></h2>
+<aside class="notes">
+<p>“Before we start, let’s get in the time machine. Set the dial for March 10, 2026. I know, that’s only seven months ago. In AI years, that’s roughly the Cretaceous.”</p>
+<p>Why that date? It’s the day admiraldev issue #547 was opened: the {admiral} team’s conversation about how to handle AI. That conversation is where this talk starts.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="destination-march-10-2026" class="slide level2 smaller">
+<h2>Destination: March 10, 2026</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>The models</strong></p>
+<ul>
+<li class="fragment">Claude <strong>Opus 4.6</strong> &amp; <strong>Sonnet 4.6</strong>: about a month old</li>
+<li class="fragment"><strong>GPT-5.4</strong>: five days old</li>
+<li class="fragment"><strong>GPT-5.3-Codex</strong>: the new coding model</li>
+<li class="fragment"><strong>Gemini 3.1 Pro</strong>: three weeks old</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>The headlines</strong></p>
+<ul>
+<li class="fragment">1M-token context window? <em>Still in beta.</em></li>
+<li class="fragment">Agents can run unattended for… <strong>20 minutes!</strong></li>
+<li class="fragment">rOpenSci has just published its AI policy</li>
+<li class="fragment"><a href="https://github.com/pharmaverse/admiraldev/issues/547"><code>admiraldev</code> #547</a> opens: <em>“Formalize our approach to AI”</em></li>
+</ul>
+</div></div>
+<div class="fragment">
+<div class="callout callout-none no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<p>Roads? Where we’re going, we don’t need roads. We need an <strong>AGENTS.md</strong>.</p>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Land the joke, then pivot: this is the world #547 was opened in, and the world AGENTS.md shipped into. Every model on this slide has since been replaced, and the file still does its job. That’s the point: the context outlives the model.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
 </section>
 <section id="whos-talking-to-your-code-base" class="slide level2 center">
 <h2>Who’s talking to your code base?</h2>
@@ -257,6 +317,8 @@ Jeff Dickinson
 </section>
 <section id="agents.md" class="slide level2 center">
 <h2>AGENTS.md</h2>
+<div class="columns">
+<div class="column" style="width:62%;">
 <blockquote>
 <p>A plain markdown file, committed to your repo, that gives AI coding agents the context they need to work correctly in your project.</p>
 </blockquote>
@@ -270,6 +332,12 @@ Jeff Dickinson
 <div class="fragment">
 <p>One file. Supported across Copilot, Cursor, Aider, Gemini CLI, Jules, and more. <a href="https://agents.md">agents.md</a></p>
 </div>
+</div><div class="column" style="width:38%;">
+<p><img data-src="assets/admiral-agents-hex.png" alt="Hex sticker reading {admiral} AGENTS, showing an AGENTS.md file over a radar screen"></p>
+<div style="font-size: 0.5em; text-align: center;">
+<p>From the <a href="https://pharmaverse.github.io/blog/posts/2026-03-31-agents-md-admiral-a/agents-md-admiral-and-the-ai-assisted-programmer.html">pharmaverse blog, 2026-03-31</a></p>
+</div>
+</div></div>
 </section>
 <section id="why-this-matters-for-the-pharmaverse" class="slide level2">
 <h2>Why this matters for the pharmaverse</h2>
@@ -702,6 +770,7 @@ Jeff Dickinson
 <section id="resources" class="slide level2">
 <h2>Resources</h2>
 <ul>
+<li><strong>These slides</strong> — <a href="https://jeffreyad.github.io/agents-md-rpharma-talk/" class="uri">https://jeffreyad.github.io/agents-md-rpharma-talk/</a></li>
 <li>AGENTS.md standard — <a href="https://agents.md" class="uri">https://agents.md</a></li>
 <li><code>{admiral}</code> AGENTS.md (live) — <a href="https://github.com/pharmaverse/admiral/blob/main/AGENTS.md" class="uri">https://github.com/pharmaverse/admiral/blob/main/AGENTS.md</a></li>
 <li><code>sync-admiralci-agents</code> workflow (live) — <a href="https://github.com/pharmaverse/admiral/blob/main/.github/workflows/sync-admiralci-agents.yml" class="uri">https://github.com/pharmaverse/admiral/blob/main/.github/workflows/sync-admiralci-agents.yml</a></li>
@@ -717,10 +786,20 @@ Jeff Dickinson
 </section>
 <section id="thank-you" class="slide level2 center">
 <h2>Thank you</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
 <div class="r-fit-text">
 <p>Questions?</p>
 </div>
 <p>Jeff Dickinson · <code>{admiralpeds}</code></p>
+</div><div class="column" style="width:40%;">
+<div style="text-align: center;">
+<p><img data-src="assets/slides-qr.svg" alt="QR code linking to these slides" width="260"></p>
+<div style="font-size: 0.55em;">
+<p><a href="https://jeffreyad.github.io/agents-md-rpharma-talk/">jeffreyad.github.io/agents-md-rpharma-talk</a></p>
+</div>
+</div>
+</div></div>
 
 </section></section>
     </div>
