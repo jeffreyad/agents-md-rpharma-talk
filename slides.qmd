@@ -5,6 +5,55 @@ author: "Jeff Dickinson"
 date: last-modified
 ---
 
+## {background-image="assets/time-machine.jpg" background-size="cover"}
+
+::: {.notes}
+"Before we start, let's get in the time machine. Set the dial for
+March 10, 2026. I know, that's only seven months ago. In AI years, that's
+roughly the Cretaceous."
+:::
+
+## Destination: March 10, 2026 {.smaller}
+
+:::: {.columns}
+::: {.column width="50%"}
+**The models**
+
+::: {.incremental}
+- Claude **Opus 4.6** & **Sonnet 4.6**: about a month old
+- **GPT-5.4**: five days old
+- **GPT-5.3-Codex**: the new coding model
+- **Gemini 3.1 Pro**: three weeks old
+:::
+:::
+
+::: {.column width="50%"}
+**The headlines**
+
+::: {.incremental}
+- 1M-token context window? *Still in beta.*
+- Agents can run unattended for… **20 minutes!**
+- rOpenSci has just published its AI policy
+- `{admiral}`'s AI policy? *Not written yet*
+:::
+:::
+::::
+
+. . .
+
+::: {.callout}
+Roads? Where we're going, we don't need roads.
+We need an **AGENTS.md**.
+:::
+
+::: {.notes}
+Land the joke, then pivot: this is the world AGENTS.md shipped into. Every
+model on this slide has since been replaced, and the file still does its job.
+That's the point: the context outlives the model.
+:::
+
+---
+
 ## Who's talking to your code base? {.center}
 
 ::: {.incremental}
