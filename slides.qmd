@@ -100,6 +100,8 @@ It doesn't know `{pharmaversesdtm}` is canonical test data, or that
 
 ## AGENTS.md {.center}
 
+:::: {.columns}
+::: {.column width="62%"}
 > A plain markdown file, committed to your repo, that gives AI coding agents
 > the context they need to work correctly in your project.
 
@@ -112,6 +114,16 @@ It doesn't know `{pharmaversesdtm}` is canonical test data, or that
 
 One file. Supported across Copilot, Cursor, Aider, Gemini CLI, Jules, and
 more. [agents.md](https://agents.md)
+:::
+
+::: {.column width="38%"}
+![](assets/admiral-agents-hex.png){fig-alt="Hex sticker reading {admiral} AGENTS, showing an AGENTS.md file over a radar screen"}
+
+::: {style="font-size: 0.5em; text-align: center;"}
+From the [pharmaverse blog, 2026-03-31](https://pharmaverse.github.io/blog/posts/2026-03-31-agents-md-admiral-a/agents-md-admiral-and-the-ai-assisted-programmer.html)
+:::
+:::
+::::
 
 ## Why this matters for the pharmaverse
 
