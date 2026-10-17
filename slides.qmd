@@ -3,6 +3,10 @@ title: "AGENTS.md, {admiral}, and the AI-Assisted Clinical Programmer"
 subtitle: "Teaching coding agents to speak CDISC"
 author: "Jeff Dickinson"
 date: last-modified
+title-slide-attributes:
+  data-background-image: assets/slides-qr.svg
+  data-background-size: 160px
+  data-background-position: 4% 92%
 ---
 
 ## {background-image="assets/time-machine.jpg" background-size="cover"}
@@ -541,6 +545,7 @@ never had a chance to know better.
 
 ## Resources
 
+- **These slides** — <https://jeffreyad.github.io/agents-md-rpharma-talk/>
 - AGENTS.md standard — <https://agents.md>
 - `{admiral}` AGENTS.md (live) —
   <https://github.com/pharmaverse/admiral/blob/main/AGENTS.md>
@@ -564,8 +569,22 @@ never had a chance to know better.
 
 ## Thank you {.center}
 
+:::: {.columns}
+::: {.column width="60%"}
 ::: {.r-fit-text}
 Questions?
 :::
 
 Jeff Dickinson · `{admiralpeds}`
+:::
+
+::: {.column width="40%"}
+::: {style="text-align: center;"}
+![](assets/slides-qr.svg){width="260" fig-alt="QR code linking to these slides"}
+
+::: {style="font-size: 0.55em;"}
+[jeffreyad.github.io/agents-md-rpharma-talk](https://jeffreyad.github.io/agents-md-rpharma-talk/)
+:::
+:::
+:::
+::::
