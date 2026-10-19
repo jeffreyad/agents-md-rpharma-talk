@@ -293,9 +293,13 @@ someone asks why the test file is listed when it "doesn't need" it.
 
 # Does it actually work?
 
-## Two weeks, two data points
+## Before and after AGENTS.md
 
 ::: {.incremental}
+- **2025-11-20** — PR [#2899](https://github.com/pharmaverse/admiral/pull/2899),
+  author: **Copilot**. One of the first Copilot PRs in `{admiral}`: adds
+  `AAGE`/`AAGEU` to the ADSL template and vignette, straight from an issue.
+  Merged 2025-11-30, months *before* AGENTS.md existed.
 - **2026-03-07** — PR [#2996](https://github.com/pharmaverse/admiral/pull/2996),
   `maxthecat2024`: fixes warning formatting in `derive_param_computed()`.
   Thorough, well-structured, fully-checked box. *Was this AI?* We don't
@@ -307,6 +311,10 @@ someone asks why the test file is listed when it "doesn't need" it.
 ::: {.notes}
 This is the pivot of the talk: from "here's a nice piece of infrastructure"
 to "here's what happened two weeks after we shipped it."
+
+Open with #2899 as the "before": agents were already contributing in
+November 2025, with no repo-specific guidance at all. AGENTS.md didn't
+invite them in; it caught up with them.
 :::
 
 ## PR #3010: what Copilot got right
