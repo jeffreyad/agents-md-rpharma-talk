@@ -305,7 +305,7 @@ someone asks why the test file is listed when it "doesn't need" it.
   Thorough, well-structured, fully-checked box. *Was this AI?* We don't
   know — and it didn't matter, because the code was good.
 - **2026-03-17** — PR [#3010](https://github.com/pharmaverse/admiral/pull/3010),
-  author: **Copilot**. No ambiguity this time.
+  author: **Copilot** again, now with AGENTS.md in the repo.
 :::
 
 ::: {.notes}
