@@ -656,17 +656,23 @@ never had a chance to know better.
 ## Thank you {.center}
 
 :::: {.columns}
-::: {.column width="60%"}
+::: {.column width="34%"}
+![](assets/jeff-ken.jpg){height="540" fig-alt="Toy-box mock-up of a Jeff action figure: Clinical Data Scientist, Navitas Data Sciences Edition, with R, CDISC, ADaM and pharmaverse accessories"}
+:::
+
+::: {.column width="38%"}
 ::: {.r-fit-text}
 Questions?
 :::
 
-Jeff Dickinson · `{admiralpeds}`
+Jeff Dickinson
+
+Navitas Data Sciences
 :::
 
-::: {.column width="40%"}
+::: {.column width="28%"}
 ::: {style="text-align: center;"}
-![](assets/slides-qr.svg){width="260" fig-alt="QR code linking to these slides"}
+![](assets/slides-qr.svg){width="220" fig-alt="QR code linking to these slides"}
 
 ::: {style="font-size: 0.55em;"}
 [jeffreyad.github.io/agents-md-rpharma-talk](https://jeffreyad.github.io/agents-md-rpharma-talk/)
