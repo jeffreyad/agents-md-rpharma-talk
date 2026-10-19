@@ -48,6 +48,19 @@ $code-block-bg: #f5f7f8;
   font-size: 0.75em;
 }
 
+.reveal .demo {
+  position: absolute;
+  right: 0;
+  bottom: -1.2em;
+  margin: 0;
+  font-size: 0.45em;
+  color: #6b7b83;
+}
+
+.reveal .demo a {
+  border-bottom: 1px dotted currentColor;
+}
+
 .reveal .center-image {
   display: block;
   margin-left: auto;
