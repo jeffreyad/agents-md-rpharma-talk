@@ -657,7 +657,7 @@ never had a chance to know better.
 
 :::: {.columns}
 ::: {.column width="34%"}
-![](assets/jeff-ken.jpg){height="540" fig-alt="Toy-box mock-up of a Jeff action figure: Clinical Data Scientist, Navitas Data Sciences Edition, with R, CDISC, ADaM and pharmaverse accessories"}
+![](assets/jeff-ken.jpg){height="500" fig-alt="Toy-box mock-up of a Jeff action figure: Clinical Data Scientist, Navitas Data Sciences Edition, with R, CDISC, ADaM and pharmaverse accessories"}
 :::
 
 ::: {.column width="38%"}
@@ -680,6 +680,13 @@ Navitas Data Sciences
 :::
 :::
 ::::
+
+::: {style="font-size: 0.4em; color: #6b7b83;"}
+**AI disclosure:** illustrations generated with Gemini Flash. The `{admiral}`
+AGENTS.md generator and workflow had contributions from Claude Code (Sonnet
+4.6 through Opus 5.5) and GitHub Copilot; this deck was edited with help
+from Claude Code.
+:::
 
 <!-- Offline backups for the live demos. "uncounted" keeps them out of the
 slide count; reach them from the "offline backup" links or by paging past
