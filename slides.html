@@ -6,11 +6,11 @@
 <script src="slides_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting-5c1318cf63eba56dbef7ba16bc7d56f5.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Jeff Dickinson">
-  <meta name="dcterms.date" content="2026-10-17">
+  <meta name="dcterms.date" content="2026-10-20">
   <title>AGENTS.md, {admiral}, and the AI-Assisted Clinical Programmer</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,10 +21,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -99,7 +102,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/theme/quarto-3d1013b7509043954012b9b23a06cc5e.css">
+  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/theme/quarto-7e14fc4798180b0c87f418fc0575e0df.css">
   <link href="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -208,12 +211,12 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Jeff Dickinson 
+Jeff Dickinson
 </div>
 </div>
 </div>
 
-  <p class="date">2026-10-17</p>
+  <p class="date">2026-10-20</p>
 </section>
 <section id="section" class="slide level2" data-background-image="assets/time-machine.jpg" data-background-size="cover">
 <h2></h2>
@@ -326,8 +329,9 @@ Jeff Dickinson
 </div>
 </div>
 </div>
-<p>. . .</p>
+<div class="fragment">
 <p>One file. Supported across Copilot, Cursor, Aider, Gemini CLI, Jules, and more. <a href="https://agents.md">agents.md</a></p>
+</div>
 </div><div class="column" style="width:38%;">
 <p><img data-src="assets/admiral-agents-hex.png" alt="Hex sticker reading {admiral} AGENTS, showing an AGENTS.md file over a radar screen"></p>
 <div style="font-size: 0.5em; text-align: center;">
@@ -404,8 +408,12 @@ Jeff Dickinson
 <span id="cb1-15"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">package_name</span><span class="kw">:</span><span class="at"> admiral</span></span>
 <span id="cb1-16"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">target_branch</span><span class="kw">:</span><span class="at"> main</span></span>
 <span id="cb1-17"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">admiralci_ref</span><span class="kw">:</span><span class="at"> main</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="demo">
+<p>Live: <a href="https://github.com/pharmaverse/admiral/blob/main/.github/workflows/sync-admiralci-agents.yml">workflow file</a> · <a href="https://github.com/pharmaverse/admiral/actions/workflows/sync-admiralci-agents.yml">recent runs</a> · <a href="#/backup-sync">offline backup</a></p>
+</div>
 <aside class="notes">
 <p>This is the literal, live workflow file from pharmaverse/admiral today. Monthly cron, plus workflow_dispatch for an on-demand run. It opens a PR against main whenever the generated content has drifted from what’s committed.</p>
+<p><strong>DEMO (~45 s):</strong> open “recent runs”. Point at the scheduled run on the 15th of each month, all green. Back to the slides.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -418,7 +426,7 @@ Jeff Dickinson
           display:block!important;
       }</style></aside>
 </section>
-<section id="what-comes-out-the-other-end" class="slide level2">
+<section id="what-comes-out-the-other-end" class="slide level2 smaller">
 <h2>What comes out the other end</h2>
 <p><code>{admiral}</code>’s <code>AGENTS.md</code> is <strong>1,382 lines</strong>, auto-generated from the <code>{admiraldev}</code> Programming Strategy, Git Usage, and R CMD Check vignettes.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu"># admiral Development Guidelines for AI Assistants</span></span>
@@ -435,8 +443,24 @@ Jeff Dickinson
 </div>
 </div>
 </div>
+<div class="demo">
+<p>Live: <a href="https://github.com/pharmaverse/admiral/blob/main/AGENTS.md?plain=1#L11-L17">AI Verification, L11–17</a> · <a href="https://github.com/pharmaverse/admiral/blob/main/AGENTS.md">rendered file</a> · <a href="#/backup-agents-md">offline backup</a></p>
+</div>
 <div class="fragment">
 <p>And it stays current: a “Testing Errors and Warnings” section added to <code>{admiraldev}</code> on 30 Sep reached <code>{admiral}</code> and <code>{admiralpeds}</code> with the next sync, with no hand edits.</p>
+<aside class="notes">
+<p><strong>DEMO (~60 s):</strong> open the L11–17 link: the verification block is highlighted. Then scroll fast through the rest to show the size: Programming Strategy from L21, Git Usage from about L1037, R CMD Check from about L1240. Let “1,382 lines” land visually.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="root-file-and-a-testthat-scoped-file" class="slide level2">
@@ -456,20 +480,38 @@ Jeff Dickinson
 </div>
 </div>
 </div>
+<div class="demo">
+<p>Live: <a href="https://github.com/pharmaverse/admiral/blob/main/tests/testthat/AGENTS.md?plain=1#L8-L13">tests/testthat/AGENTS.md</a> · <a href="https://github.com/pharmaverse/admiral/blob/main/.Rbuildignore#L22-L23">.Rbuildignore, L22–23</a> · <a href="#/backup-rbuildignore">offline backup</a></p>
+</div>
+<aside class="notes">
+<p><strong>DEMO (~30 s, optional):</strong> show the test file’s own verification line (<code># admiral test guidelines loaded</code>), then the two <code>.Rbuildignore</code> lines. Heads-up: {admiral} lists <em>both</em> files there (L22 and L23), so be ready if someone asks why the test file is listed when it “doesn’t need” it.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
 <section id="does-it-actually-work" class="title-slide slide level1 center">
 <h1>Does it actually work?</h1>
 
 </section>
-<section id="two-weeks-two-data-points" class="slide level2">
-<h2>Two weeks, two data points</h2>
+<section id="before-and-after-agents.md" class="slide level2">
+<h2>Before and after AGENTS.md</h2>
 <ul>
+<li class="fragment"><strong>2025-11-20</strong> — PR <a href="https://github.com/pharmaverse/admiral/pull/2899">#2899</a>, author: <strong>Copilot</strong>. One of the first Copilot PRs in <code>{admiral}</code>: adds <code>AAGE</code>/<code>AAGEU</code> to the ADSL template and vignette, straight from an issue. Merged 2025-11-30, months <em>before</em> AGENTS.md existed.</li>
 <li class="fragment"><strong>2026-03-07</strong> — PR <a href="https://github.com/pharmaverse/admiral/pull/2996">#2996</a>, <code>maxthecat2024</code>: fixes warning formatting in <code>derive_param_computed()</code>. Thorough, well-structured, fully-checked box. <em>Was this AI?</em> We don’t know — and it didn’t matter, because the code was good.</li>
-<li class="fragment"><strong>2026-03-17</strong> — PR <a href="https://github.com/pharmaverse/admiral/pull/3010">#3010</a>, author: <strong>Copilot</strong>. No ambiguity this time.</li>
+<li class="fragment"><strong>2026-03-17</strong> — PR <a href="https://github.com/pharmaverse/admiral/pull/3010">#3010</a>, author: <strong>Copilot</strong> again, now with AGENTS.md in the repo.</li>
 </ul>
 <aside class="notes">
 <p>This is the pivot of the talk: from “here’s a nice piece of infrastructure” to “here’s what happened two weeks after we shipped it.”</p>
+<p>Open with #2899 as the “before”: agents were already contributing in November 2025, with no repo-specific guidance at all. AGENTS.md didn’t invite them in; it caught up with them.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -506,6 +548,22 @@ Jeff Dickinson
 <p>“R is not available in my sandbox environment, so I can’t execute <code>devtools::document()</code> directly.”</p>
 </blockquote>
 <p>A human ran it and pushed the correct <code>.Rd</code> in commit <a href="https://github.com/pharmaverse/admiral/commit/c855860"><code>c855860</code></a>.</p>
+<div class="demo">
+<p>Live: <a href="https://github.com/pharmaverse/admiral/pull/3010">PR #3010 conversation</a> · <a href="https://github.com/pharmaverse/admiral/commit/c855860">commit c855860</a></p>
+</div>
+<aside class="notes">
+<p><strong>DEMO (~45 s):</strong> open the PR conversation and scroll to the Copilot reply about R not being in its sandbox. The quotes are on this slide already, so skip the demo if time is short. (PR merged 2026-05-01.)</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="the-nuance-that-matters" class="slide level2">
 <h2>The nuance that matters</h2>
@@ -575,6 +633,22 @@ Jeff Dickinson
 </div>
 </div>
 </div>
+<div class="demo">
+<p>Live: <a href="https://github.com/pharmaverse/admiral/blob/main/tests/testthat/AGENTS.md?plain=1#L218">the guidance, L218</a> · <a href="https://github.com/search?q=repo%3Apharmaverse%2Fadmiral+%22tibble%3A%3Atribble%22&amp;type=code">tibble::tribble in {admiral}</a></p>
+</div>
+<aside class="notes">
+<p><strong>DEMO (~30 s, optional):</strong> L218 says “from the <code>tibble</code> package” and then <code>dplyr::tribble()</code> in the same sentence. The code search needs you signed in to GitHub.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="the-broader-community-agrees" class="slide level2">
 <h2>The broader community agrees</h2>
@@ -623,6 +697,22 @@ Jeff Dickinson
 <li><code>{admiralonco}</code> — <a href="https://github.com/pharmaverse/admiralonco/pull/364">admiralonco#364</a></li>
 </ul>
 <p>Each adds a package-specific config capturing what’s unique to its therapeutic area — ready for the day <code>{admiralci}</code> consumes it directly.</p>
+<div class="demo">
+<p>Live: <a href="https://github.com/pharmaverse/admiralpeds/pull/150/files">admiralpeds#150 files</a> · <a href="https://github.com/pharmaverse/admiralonco/pull/364/files">admiralonco#364 files</a> · <a href="#/backup-adopters">offline backup</a></p>
+</div>
+<aside class="notes">
+<p><strong>DEMO (~45 s):</strong> open a PR’s “Files changed” tab: the workflow, both AGENTS.md files, <code>.Rbuildignore</code>, and <code>.github/agents-config.yml</code>. Check the status before the talk: as of 2026-10-19 both PRs are still <strong>open</strong>, so say “proposed” rather than “adopted” if they haven’t merged.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="what-the-config-captures" class="slide level2">
 <h2>What the config captures</h2>
@@ -641,7 +731,11 @@ Jeff Dickinson
 </div>
 </div>
 </div>
+<div class="demo">
+<p>Live: <a href="https://github.com/pharmaverse/admiralonco/blob/363-agentsmd-file-for-admiralonco/.github/agents-config.yml#L77-L83">agents-config.yml, L77–83</a></p>
+</div>
 <aside class="notes">
+<p><strong>DEMO (optional):</strong> this link points at the PR branch. If #364 has merged and the branch is deleted, swap <code>363-agentsmd-file-for-admiralonco</code> for <code>main</code> in the URL.</p>
 <p>Be candid here if asked: as of this generation, admiralci’s script doesn’t parse the per-package YAML yet — only the four admiraldev vignettes. The YAML is forward-positioned for when that lands. Good moment for audience Q&amp;A about roadmap / contributing that piece upstream.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -783,19 +877,163 @@ Jeff Dickinson
 <section id="thank-you" class="slide level2 center">
 <h2>Thank you</h2>
 <div class="columns">
-<div class="column" style="width:60%;">
+<div class="column" style="width:34%;">
+<p><img data-src="assets/jeff-ken.jpg" alt="Toy-box mock-up of a Jeff action figure: Clinical Data Scientist, Navitas Data Sciences Edition, with R, CDISC, ADaM and pharmaverse accessories" height="500"></p>
+</div><div class="column" style="width:38%;">
 <div class="r-fit-text">
 <p>Questions?</p>
 </div>
-<p>Jeff Dickinson · <code>{admiralpeds}</code></p>
-</div><div class="column" style="width:40%;">
+<p>Jeff Dickinson</p>
+<p>Navitas Data Sciences</p>
+</div><div class="column" style="width:28%;">
 <div style="text-align: center;">
-<p><img data-src="assets/slides-qr.svg" alt="QR code linking to these slides" width="260"></p>
+<p><img data-src="assets/slides-qr.svg" alt="QR code linking to these slides" width="220"></p>
 <div style="font-size: 0.55em;">
 <p><a href="https://jeffreyad.github.io/agents-md-rpharma-talk/">jeffreyad.github.io/agents-md-rpharma-talk</a></p>
 </div>
 </div>
 </div></div>
+<div style="font-size: 0.4em; color: #6b7b83;">
+<p><strong>AI disclosure:</strong> illustrations generated with Gemini Flash. The <code>{admiral}</code> AGENTS.md generator and workflow had contributions from Claude Code (Sonnet 4.6 through Opus 5.5) and GitHub Copilot; this deck was edited with help from Claude Code.</p>
+</div>
+<!-- Offline backups for the live demos. "uncounted" keeps them out of the
+slide count; reach them from the "offline backup" links or by paging past
+the last slide. Snapshot taken 2026-10-19. -->
+</section>
+<section id="backup-sync" class="slide level2" data-visibility="uncounted">
+<h2>Backup: workflow runs</h2>
+<p><code>pharmaverse/admiral</code> → Actions → <em>Create the AGENTS.md</em></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Run</th>
+<th>Trigger</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2026-10-15</td>
+<td>schedule</td>
+<td>✅ success</td>
+</tr>
+<tr class="even">
+<td>2026-09-15</td>
+<td>schedule</td>
+<td>✅ success</td>
+</tr>
+<tr class="odd">
+<td>2026-08-15</td>
+<td>schedule</td>
+<td>✅ success</td>
+</tr>
+</tbody>
+</table>
+<p>Cron <code>'0 8 15 * *'</code>: the 15th of every month, plus <code>workflow_dispatch</code> on demand.</p>
+<div class="demo">
+<p>Snapshot 2026-10-19 · <a href="#/the-reusable-workflow">← back</a></p>
+</div>
+</section>
+<section id="backup-agents-md" class="slide level2" data-visibility="uncounted">
+<h2>Backup: inside {admiral}’s AGENTS.md</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Lines</th>
+<th>Section</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1–9</td>
+<td>Header: auto-generated, sources, update workflow</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>11–17</td>
+<td><strong>AI Verification</strong></td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>21–</td>
+<td>Programming Strategy</td>
+<td><code>programming_strategy.Rmd</code></td>
+</tr>
+<tr class="even">
+<td>~1037–</td>
+<td>Git Usage</td>
+<td><code>git_usage.Rmd</code></td>
+</tr>
+<tr class="odd">
+<td>~1240–1382</td>
+<td>R CMD Check issues</td>
+<td><code>rcmd_issues.Rmd</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>tests/testthat/AGENTS.md</code>: 354 lines of Unit Test Strategy, with its own verification line, <code># admiral test guidelines loaded</code>.</p>
+<div class="demo">
+<p>Snapshot 2026-10-19 · <a href="#/what-comes-out-the-other-end">← back</a></p>
+</div>
+</section>
+<section id="backup-rbuildignore" class="slide level2" data-visibility="uncounted">
+<h2>Backup: {admiral}’s .Rbuildignore</h2>
+<pre class="text"><code>21  ^\.lycheeignore$
+22  ^AGENTS\.md$
+23  ^tests/testthat/AGENTS\.md$
+24  ^staged_dependencies.yaml$</code></pre>
+<div class="demo">
+<p>Snapshot 2026-10-19 · <a href="#/root-file-and-a-testthat-scoped-file">← back</a></p>
+</div>
+</section>
+<section id="backup-adopters" class="slide level2" data-visibility="uncounted">
+<h2>Backup: adopter PRs</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><code>{admiralpeds}</code> #150</th>
+<th><code>{admiralonco}</code> #364</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Status</td>
+<td>Open</td>
+<td>Open</td>
+</tr>
+<tr class="even">
+<td>Workflow</td>
+<td><code>sync-admiralci-agents.yml</code></td>
+<td><code>sync-admiralci-agents.yml</code></td>
+</tr>
+<tr class="odd">
+<td>Generated</td>
+<td><code>AGENTS.md</code>, <code>tests/testthat/AGENTS.md</code></td>
+<td><code>AGENTS.md</code>, <code>tests/testthat/AGENTS.md</code></td>
+</tr>
+<tr class="even">
+<td>Config</td>
+<td><code>.github/agents-config.yml</code></td>
+<td><code>.github/agents-config.yml</code></td>
+</tr>
+<tr class="odd">
+<td>Package-specific section</td>
+<td><code>pediatric_specific_conventions</code></td>
+<td><code>oncology_specific_conventions</code></td>
+</tr>
+</tbody>
+</table>
+<p>Both configs share <code>package_name</code>, <code>therapeutic_area</code>, <code>package_purpose</code>, <code>related_packages</code>, and <code>cdisc_igs</code>.</p>
+<div class="demo">
+<p>Snapshot 2026-10-19 · <a href="#/live-examples-two-adopters-so-far">← back</a></p>
+</div>
 
 </section></section>
     </div>
@@ -829,7 +1067,7 @@ Jeff Dickinson
       // https://revealjs.com/config/
       Reveal.initialize({
 'controlsAuto': true,
-'previewLinksAuto': true,
+'previewLinksAuto': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -1100,6 +1338,11 @@ Jeff Dickinson
               if (link.dataset.originalHref !== undefined) {
                 link.href = link.dataset.originalHref;
               }
+                // target, if specified
+                link.setAttribute("target", "_blank");
+                if (link.getAttribute("rel") === null) {
+                  link.setAttribute("rel", "noopener");
+                }
             }
           }
         function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
