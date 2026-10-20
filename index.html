@@ -6,11 +6,11 @@
 <script src="slides_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting-5c1318cf63eba56dbef7ba16bc7d56f5.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Jeff Dickinson">
-  <meta name="dcterms.date" content="2026-10-19">
+  <meta name="dcterms.date" content="2026-10-20">
   <title>AGENTS.md, {admiral}, and the AI-Assisted Clinical Programmer</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,10 +21,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -99,7 +102,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/theme/quarto-7e14fc4798180b0c87f418fc0575e0df.css">
+  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/theme/quarto-7d080115e78d2eb2a6fb05807c7690d9.css">
   <link href="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -208,18 +211,74 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Jeff Dickinson 
+Jeff Dickinson
 </div>
 </div>
 </div>
 
-  <p class="date">2026-10-19</p>
+  <p class="date">2026-10-20</p>
 </section>
 <section id="section" class="slide level2" data-background-image="assets/time-machine.jpg" data-background-size="cover">
 <h2></h2>
 <aside class="notes">
 <p>“Before we start, let’s get in the time machine. Set the dial for March 10, 2026. I know, that’s only seven months ago. In AI years, that’s roughly the Cretaceous.”</p>
 <p>Why that date? It’s the day admiraldev issue #547 was opened: the {admiral} team’s conversation about how to handle AI. That conversation is where this talk starts.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="how-we-got-here" class="slide level2">
+<h2>How we got here</h2>
+<div class="timeline">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Date</th>
+<th>What happened</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2025-11-20</td>
+<td>First Copilot-authored PR in <code>{admiral}</code>: <a href="https://github.com/pharmaverse/admiral/pull/2899">#2899</a>, <code>AAGE</code>/<code>AAGEU</code> in the ADSL template</td>
+</tr>
+<tr class="even">
+<td>2025-12-08</td>
+<td><a href="https://github.com/pharmaverse/admiral/issues/2920">#2920</a> opened: <em>“Add Copilot Instructions”</em> (Copilot’s own attempt, <a href="https://github.com/pharmaverse/admiral/pull/2921">#2921</a>, closed unmerged)</td>
+</tr>
+<tr class="odd">
+<td>2026-02-18</td>
+<td>Suggestion in #2920: make it agent-agnostic with <code>AGENT.md</code> files instead</td>
+</tr>
+<tr class="even">
+<td><strong>2026-03-10</strong></td>
+<td><a href="https://github.com/pharmaverse/admiraldev/issues/547"><code>admiraldev</code> #547</a> opened: <em>“Formalize our approach to AI”</em></td>
+</tr>
+<tr class="odd">
+<td>2026-03-12</td>
+<td><a href="https://github.com/pharmaverse/admiral/pull/2983">#2983</a> merged: <code>AGENTS.md</code>, <code>tests/testthat/AGENTS.md</code>, and the sync workflow</td>
+</tr>
+<tr class="even">
+<td>2026-03-31</td>
+<td><a href="https://pharmaverse.github.io/blog/posts/2026-03-31-agents-md-admiral-a/agents-md-admiral-and-the-ai-assisted-programmer.html">pharmaverse blog post</a></td>
+</tr>
+<tr class="odd">
+<td>2026-05-01</td>
+<td>AI Assistance paragraph merged into CONTRIBUTING (<a href="https://github.com/pharmaverse/admiral/pull/3072">#3072</a>); #547 closed</td>
+</tr>
+</tbody>
+</table>
+</div>
+<aside class="notes">
+<p>The dial is set to March 10, but the road there started in November: Copilot was already opening PRs before anyone wrote it instructions. The idea began as Copilot-specific instructions (#2920, Dec 8) and became agent-agnostic after the Feb 18 suggestion in that issue. AGENTS.md merged two days after #547 opened; the formal policy followed seven weeks later.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -326,8 +385,9 @@ Jeff Dickinson
 </div>
 </div>
 </div>
-<p>. . .</p>
+<div class="fragment">
 <p>One file. Supported across Copilot, Cursor, Aider, Gemini CLI, Jules, and more. <a href="https://agents.md">agents.md</a></p>
+</div>
 </div><div class="column" style="width:38%;">
 <p><img data-src="assets/admiral-agents-hex.png" alt="Hex sticker reading {admiral} AGENTS, showing an AGENTS.md file over a radar screen"></p>
 <div style="font-size: 0.5em; text-align: center;">
@@ -838,7 +898,7 @@ Jeff Dickinson
 <h2>What’s still evolving</h2>
 <ul>
 <li class="fragment">Per-package YAML context is written, but not yet <strong>consumed</strong> by <code>{admiralci}</code> — tracked in <a href="https://github.com/pharmaverse/admiralci/issues/246">admiralci#246</a>; ecosystem/ADaM-fundamentals sections come after</li>
-<li class="fragment"><code>{admiral}</code>’s formal AI policy <strong>landed 2026-04-27</strong>: an “AI Assistance” paragraph in <a href="https://pharmaverse.github.io/admiral/main/CONTRIBUTING.html#acknowledgements-for-contributions">CONTRIBUTING</a> — core team may use AI while staying in the loop; external contributors read the contributing guide and Programming Strategy first</li>
+<li class="fragment"><code>{admiral}</code>’s formal AI policy <strong>landed 2026-05-01</strong>: an “AI Assistance” paragraph in <a href="https://pharmaverse.github.io/admiral/main/CONTRIBUTING.html#acknowledgements-for-contributions">CONTRIBUTING</a> — core team may use AI while staying in the loop; external contributors read the contributing guide and Programming Strategy first</li>
 <li class="fragment">We don’t always know whether a contribution was AI-assisted, and increasingly it may not matter as much as <em>whether the code is right</em></li>
 </ul>
 </section>
@@ -863,7 +923,7 @@ Jeff Dickinson
 <li><code>create_agents_md.R</code> generator script — <a href="https://github.com/pharmaverse/admiralci/blob/main/.github/scripts/create_agents_md.R" class="uri">https://github.com/pharmaverse/admiralci/blob/main/.github/scripts/create_agents_md.R</a></li>
 <li>Per-package config support (admiralci#246) — <a href="https://github.com/pharmaverse/admiralci/issues/246" class="uri">https://github.com/pharmaverse/admiralci/issues/246</a></li>
 <li>Upstream guidance fixes (admiraldev#580) — <a href="https://github.com/pharmaverse/admiraldev/issues/580" class="uri">https://github.com/pharmaverse/admiraldev/issues/580</a></li>
-<li>pharmaverse AI strategy discussion (closed 2026-04-27) — <a href="https://github.com/pharmaverse/admiraldev/issues/547" class="uri">https://github.com/pharmaverse/admiraldev/issues/547</a></li>
+<li>pharmaverse AI strategy discussion (closed 2026-05-01) — <a href="https://github.com/pharmaverse/admiraldev/issues/547" class="uri">https://github.com/pharmaverse/admiraldev/issues/547</a></li>
 <li><code>{admiral}</code> CONTRIBUTING — AI Assistance policy — <a href="https://pharmaverse.github.io/admiral/main/CONTRIBUTING.html#acknowledgements-for-contributions" class="uri">https://pharmaverse.github.io/admiral/main/CONTRIBUTING.html#acknowledgements-for-contributions</a></li>
 <li>RConsortium <code>pharma-skills</code> (Pilot 7) — <a href="https://github.com/RConsortium/pharma-skills" class="uri">https://github.com/RConsortium/pharma-skills</a></li>
 <li>pharmaverse examples site — <a href="https://pharmaverse.github.io/examples/" class="uri">https://pharmaverse.github.io/examples/</a></li>
