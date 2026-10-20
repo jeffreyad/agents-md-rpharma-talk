@@ -10,7 +10,9 @@ format:
     logo: assets/admiral_logo.png
     footer: "AGENTS.md, {admiral}, and the AI-Assisted Clinical Programmer — R/Pharma"
     footnotes-hover: true
-    preview-links: auto
+    # GitHub refuses to load in an iframe, so open links in a new tab
+    preview-links: false
+    link-external-newwindow: true
     code-line-numbers: false
     highlight-style: github
     transition: fade

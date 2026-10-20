@@ -206,14 +206,23 @@ jobs:
       admiralci_ref: main
 ```
 
+::: {.demo}
+Live: [workflow file](https://github.com/pharmaverse/admiral/blob/main/.github/workflows/sync-admiralci-agents.yml)
+· [recent runs](https://github.com/pharmaverse/admiral/actions/workflows/sync-admiralci-agents.yml)
+· [offline backup](#backup-sync)
+:::
+
 ::: {.notes}
 This is the literal, live workflow file from pharmaverse/admiral today.
 Monthly cron, plus workflow_dispatch for an on-demand run. It opens a PR
 against main whenever the generated content has drifted from what's
 committed.
+
+**DEMO (~45 s):** open "recent runs". Point at the scheduled run on the
+15th of each month, all green. Back to the slides.
 :::
 
-## What comes out the other end
+## What comes out the other end {.smaller}
 
 `{admiral}`'s `AGENTS.md` is **1,382 lines**, auto-generated from the
 `{admiraldev}` Programming Strategy, Git Usage, and R CMD Check vignettes.
@@ -233,11 +242,24 @@ A small, clever trick: agent compliance becomes **observable** at code
 review time. If the comment's missing, the guidelines probably weren't read.
 :::
 
+::: {.demo}
+Live: [AI Verification, L11–17](https://github.com/pharmaverse/admiral/blob/main/AGENTS.md?plain=1#L11-L17)
+· [rendered file](https://github.com/pharmaverse/admiral/blob/main/AGENTS.md)
+· [offline backup](#backup-agents-md)
+:::
+
 . . .
 
 And it stays current: a "Testing Errors and Warnings" section added to
 `{admiraldev}` on 30 Sep reached `{admiral}` and `{admiralpeds}` with the
 next sync, with no hand edits.
+
+::: {.notes}
+**DEMO (~60 s):** open the L11–17 link: the verification block is
+highlighted. Then scroll fast through the rest to show the size: Programming
+Strategy from L21, Git Usage from about L1037, R CMD Check from about L1240.
+Let "1,382 lines" land visually.
+:::
 
 ## Root file, and a testthat-scoped file
 
@@ -256,22 +278,43 @@ next sync, with no hand edits.
 Only the root file needs this; `tests/testthat/AGENTS.md` doesn't.
 :::
 
+::: {.demo}
+Live: [tests/testthat/AGENTS.md](https://github.com/pharmaverse/admiral/blob/main/tests/testthat/AGENTS.md?plain=1#L8-L13)
+· [.Rbuildignore, L22–23](https://github.com/pharmaverse/admiral/blob/main/.Rbuildignore#L22-L23)
+· [offline backup](#backup-rbuildignore)
+:::
+
+::: {.notes}
+**DEMO (~30 s, optional):** show the test file's own verification line
+(`# admiral test guidelines loaded`), then the two `.Rbuildignore` lines.
+Heads-up: {admiral} lists *both* files there (L22 and L23), so be ready if
+someone asks why the test file is listed when it "doesn't need" it.
+:::
+
 # Does it actually work?
 
-## Two weeks, two data points
+## Before and after AGENTS.md
 
 ::: {.incremental}
+- **2025-11-20** — PR [#2899](https://github.com/pharmaverse/admiral/pull/2899),
+  author: **Copilot**. One of the first Copilot PRs in `{admiral}`: adds
+  `AAGE`/`AAGEU` to the ADSL template and vignette, straight from an issue.
+  Merged 2025-11-30, months *before* AGENTS.md existed.
 - **2026-03-07** — PR [#2996](https://github.com/pharmaverse/admiral/pull/2996),
   `maxthecat2024`: fixes warning formatting in `derive_param_computed()`.
   Thorough, well-structured, fully-checked box. *Was this AI?* We don't
   know — and it didn't matter, because the code was good.
 - **2026-03-17** — PR [#3010](https://github.com/pharmaverse/admiral/pull/3010),
-  author: **Copilot**. No ambiguity this time.
+  author: **Copilot** again, now with AGENTS.md in the repo.
 :::
 
 ::: {.notes}
 This is the pivot of the talk: from "here's a nice piece of infrastructure"
 to "here's what happened two weeks after we shipped it."
+
+Open with #2899 as the "before": agents were already contributing in
+November 2025, with no repo-specific guidance at all. AGENTS.md didn't
+invite them in; it caught up with them.
 :::
 
 ## PR #3010: what Copilot got right
@@ -301,6 +344,17 @@ When pressed by a reviewer:
 
 A human ran it and pushed the correct `.Rd` in commit
 [`c855860`](https://github.com/pharmaverse/admiral/commit/c855860).
+
+::: {.demo}
+Live: [PR #3010 conversation](https://github.com/pharmaverse/admiral/pull/3010)
+· [commit c855860](https://github.com/pharmaverse/admiral/commit/c855860)
+:::
+
+::: {.notes}
+**DEMO (~45 s):** open the PR conversation and scroll to the Copilot reply
+about R not being in its sandbox. The quotes are on this slide already, so
+skip the demo if time is short. (PR merged 2026-05-01.)
+:::
 
 ## The nuance that matters
 
@@ -365,6 +419,17 @@ An agent follows what the guidance **says**, not what the codebase
 more than it used to.
 :::
 
+::: {.demo}
+Live: [the guidance, L218](https://github.com/pharmaverse/admiral/blob/main/tests/testthat/AGENTS.md?plain=1#L218)
+· [tibble::tribble in {admiral}](https://github.com/search?q=repo%3Apharmaverse%2Fadmiral+%22tibble%3A%3Atribble%22&type=code)
+:::
+
+::: {.notes}
+**DEMO (~30 s, optional):** L218 says "from the `tibble` package" and then
+`dplyr::tribble()` in the same sentence. The code search needs you signed
+in to GitHub.
+:::
+
 ## The broader community agrees
 
 [rOpenSci's AI policy](https://ropensci.org/blog/2026/02/26/ropensci-ai-policy/)
@@ -427,6 +492,19 @@ with:
 Each adds a package-specific config capturing what's unique to its
 therapeutic area — ready for the day `{admiralci}` consumes it directly.
 
+::: {.demo}
+Live: [admiralpeds#150 files](https://github.com/pharmaverse/admiralpeds/pull/150/files)
+· [admiralonco#364 files](https://github.com/pharmaverse/admiralonco/pull/364/files)
+· [offline backup](#backup-adopters)
+:::
+
+::: {.notes}
+**DEMO (~45 s):** open a PR's "Files changed" tab: the workflow, both
+AGENTS.md files, `.Rbuildignore`, and `.github/agents-config.yml`. Check the
+status before the talk: as of 2026-10-19 both PRs are still **open**, so
+say "proposed" rather than "adopted" if they haven't merged.
+:::
+
 ## What the config captures
 
 From `{admiralonco}`'s `agents-config.yml`:
@@ -446,7 +524,15 @@ Package knowledge an agent can't infer from reading the source: the
 deprecated functions are still there, and still documented.
 :::
 
+::: {.demo}
+Live: [agents-config.yml, L77–83](https://github.com/pharmaverse/admiralonco/blob/363-agentsmd-file-for-admiralonco/.github/agents-config.yml#L77-L83)
+:::
+
 ::: {.notes}
+**DEMO (optional):** this link points at the PR branch. If #364 has merged
+and the branch is deleted, swap `363-agentsmd-file-for-admiralonco` for
+`main` in the URL.
+
 Be candid here if asked: as of this generation, admiralci's script doesn't
 parse the per-package YAML yet — only the four admiraldev vignettes. The
 YAML is forward-positioned for when that lands. Good moment for audience
@@ -570,17 +656,23 @@ never had a chance to know better.
 ## Thank you {.center}
 
 :::: {.columns}
-::: {.column width="60%"}
+::: {.column width="34%"}
+![](assets/jeff-ken.jpg){height="500" fig-alt="Toy-box mock-up of a Jeff action figure: Clinical Data Scientist, Navitas Data Sciences Edition, with R, CDISC, ADaM and pharmaverse accessories"}
+:::
+
+::: {.column width="38%"}
 ::: {.r-fit-text}
 Questions?
 :::
 
-Jeff Dickinson · `{admiralpeds}`
+Jeff Dickinson
+
+Navitas Data Sciences
 :::
 
-::: {.column width="40%"}
+::: {.column width="28%"}
 ::: {style="text-align: center;"}
-![](assets/slides-qr.svg){width="260" fig-alt="QR code linking to these slides"}
+![](assets/slides-qr.svg){width="220" fig-alt="QR code linking to these slides"}
 
 ::: {style="font-size: 0.55em;"}
 [jeffreyad.github.io/agents-md-rpharma-talk](https://jeffreyad.github.io/agents-md-rpharma-talk/)
@@ -588,3 +680,78 @@ Jeff Dickinson · `{admiralpeds}`
 :::
 :::
 ::::
+
+::: {style="font-size: 0.4em; color: #6b7b83;"}
+**AI disclosure:** illustrations generated with Gemini Flash. The `{admiral}`
+AGENTS.md generator and workflow had contributions from Claude Code (Sonnet
+4.6 through Opus 5.5) and GitHub Copilot; this deck was edited with help
+from Claude Code.
+:::
+
+<!-- Offline backups for the live demos. "uncounted" keeps them out of the
+slide count; reach them from the "offline backup" links or by paging past
+the last slide. Snapshot taken 2026-10-19. -->
+
+## Backup: workflow runs {#backup-sync visibility="uncounted"}
+
+`pharmaverse/admiral` → Actions → *Create the AGENTS.md*
+
+| Run | Trigger | Result |
+|---|---|---|
+| 2026-10-15 | schedule | ✅ success |
+| 2026-09-15 | schedule | ✅ success |
+| 2026-08-15 | schedule | ✅ success |
+
+Cron `'0 8 15 * *'`: the 15th of every month, plus `workflow_dispatch`
+on demand.
+
+::: {.demo}
+Snapshot 2026-10-19 · [← back](#the-reusable-workflow)
+:::
+
+## Backup: inside {admiral}'s AGENTS.md {#backup-agents-md visibility="uncounted"}
+
+| Lines | Section | Source |
+|---|---|---|
+| 1–9 | Header: auto-generated, sources, update workflow | — |
+| 11–17 | **AI Verification** | — |
+| 21– | Programming Strategy | `programming_strategy.Rmd` |
+| ~1037– | Git Usage | `git_usage.Rmd` |
+| ~1240–1382 | R CMD Check issues | `rcmd_issues.Rmd` |
+
+`tests/testthat/AGENTS.md`: 354 lines of Unit Test Strategy, with its own
+verification line, `# admiral test guidelines loaded`.
+
+::: {.demo}
+Snapshot 2026-10-19 · [← back](#what-comes-out-the-other-end)
+:::
+
+## Backup: {admiral}'s .Rbuildignore {#backup-rbuildignore visibility="uncounted"}
+
+```text
+21  ^\.lycheeignore$
+22  ^AGENTS\.md$
+23  ^tests/testthat/AGENTS\.md$
+24  ^staged_dependencies.yaml$
+```
+
+::: {.demo}
+Snapshot 2026-10-19 · [← back](#root-file-and-a-testthat-scoped-file)
+:::
+
+## Backup: adopter PRs {#backup-adopters visibility="uncounted"}
+
+| | `{admiralpeds}` #150 | `{admiralonco}` #364 |
+|---|---|---|
+| Status | Open | Open |
+| Workflow | `sync-admiralci-agents.yml` | `sync-admiralci-agents.yml` |
+| Generated | `AGENTS.md`, `tests/testthat/AGENTS.md` | `AGENTS.md`, `tests/testthat/AGENTS.md` |
+| Config | `.github/agents-config.yml` | `.github/agents-config.yml` |
+| Package-specific section | `pediatric_specific_conventions` | `oncology_specific_conventions` |
+
+Both configs share `package_name`, `therapeutic_area`, `package_purpose`,
+`related_packages`, and `cdisc_igs`.
+
+::: {.demo}
+Snapshot 2026-10-19 · [← back](#live-examples-two-adopters-so-far)
+:::
