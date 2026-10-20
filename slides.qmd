@@ -21,6 +21,28 @@ team's conversation about how to handle AI. That conversation is where this
 talk starts.
 :::
 
+## How we got here
+
+::: {.timeline}
+| Date | What happened |
+|---|---|
+| 2025-11-20 | First Copilot-authored PR in `{admiral}`: [#2899](https://github.com/pharmaverse/admiral/pull/2899), `AAGE`/`AAGEU` in the ADSL template |
+| 2025-12-08 | [#2920](https://github.com/pharmaverse/admiral/issues/2920) opened: *"Add Copilot Instructions"* (Copilot's own attempt, [#2921](https://github.com/pharmaverse/admiral/pull/2921), closed unmerged) |
+| 2026-02-18 | Suggestion in #2920: make it agent-agnostic with `AGENT.md` files instead |
+| **2026-03-10** | [`admiraldev` #547](https://github.com/pharmaverse/admiraldev/issues/547) opened: *"Formalize our approach to AI"* |
+| 2026-03-12 | [#2983](https://github.com/pharmaverse/admiral/pull/2983) merged: `AGENTS.md`, `tests/testthat/AGENTS.md`, and the sync workflow |
+| 2026-03-31 | [pharmaverse blog post](https://pharmaverse.github.io/blog/posts/2026-03-31-agents-md-admiral-a/agents-md-admiral-and-the-ai-assisted-programmer.html) |
+| 2026-05-01 | AI Assistance paragraph merged into CONTRIBUTING ([#3072](https://github.com/pharmaverse/admiral/pull/3072)); #547 closed |
+:::
+
+::: {.notes}
+The dial is set to March 10, but the road there started in November:
+Copilot was already opening PRs before anyone wrote it instructions. The
+idea began as Copilot-specific instructions (#2920, Dec 8) and became
+agent-agnostic after the Feb 18 suggestion in that issue. AGENTS.md merged
+two days after #547 opened; the formal policy followed seven weeks later.
+:::
+
 ## Destination: March 10, 2026 {.smaller}
 
 :::: {.columns}
@@ -610,7 +632,7 @@ codebase?**
   `{admiralci}` — tracked in
   [admiralci#246](https://github.com/pharmaverse/admiralci/issues/246);
   ecosystem/ADaM-fundamentals sections come after
-- `{admiral}`'s formal AI policy **landed 2026-04-27**: an "AI Assistance"
+- `{admiral}`'s formal AI policy **landed 2026-05-01**: an "AI Assistance"
   paragraph in [CONTRIBUTING](https://pharmaverse.github.io/admiral/main/CONTRIBUTING.html#acknowledgements-for-contributions) —
   core team may use AI while staying in the loop; external contributors
   read the contributing guide and Programming Strategy first
@@ -643,7 +665,7 @@ never had a chance to know better.
   <https://github.com/pharmaverse/admiralci/issues/246>
 - Upstream guidance fixes (admiraldev#580) —
   <https://github.com/pharmaverse/admiraldev/issues/580>
-- pharmaverse AI strategy discussion (closed 2026-04-27) —
+- pharmaverse AI strategy discussion (closed 2026-05-01) —
   <https://github.com/pharmaverse/admiraldev/issues/547>
 - `{admiral}` CONTRIBUTING — AI Assistance policy —
   <https://pharmaverse.github.io/admiral/main/CONTRIBUTING.html#acknowledgements-for-contributions>
